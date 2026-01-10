@@ -3,7 +3,6 @@ import { ThemeProvider } from "./contexts/ThemeContext";
 import { SiteSettingsProvider } from "./contexts/SiteSettingsContext";
 import { DynamicHead } from "./components/DynamicHead";
 
-// Lazy load all pages
 const LandingPage = lazy(() => import("./pages/LandingPage"));
 const FeaturesPage = lazy(() =>
   import("./components/features/features-page/FeaturesPage").then((m) => ({
@@ -18,9 +17,13 @@ const DebugFeaturesAPI = lazy(() => import("./pages/DebugFeaturesApi"));
 const DebugLandingAPI = lazy(() => import("./pages/DebugLandingApi"));
 const Maverick = lazy(() => import("./components/salespage/Maverick"));
 const ImageGallery = lazy(() => import("./components/gallery/ImageGallery"));
-const AffiliateDashboard = lazy(() => import("./components/landingpage/AffiliateDashboard"));
+const AffiliateDashboard = lazy(
+  () => import("./components/landingpage/AffiliateDashboard")
+);
 const TeamPage = lazy(() => import("./components/teams/TeamPage"));
-const InformationPage = lazy(() => import("./components/information-page/InformationPage"));
+const InformationPage = lazy(
+  () => import("./components/information-page/InformationPage")
+);
 
 // Loading component
 const PageLoader = () => (
@@ -187,7 +190,9 @@ function AppContent() {
         {currentView.type === "gallery" && <ImageGallery />}
         {currentView.type === "affiliate" && <AffiliateDashboard />}
         {currentView.type === "team" && <TeamPage />}
-        {currentView.type === "demo-websites" && <InformationPage slug="demo-websites" />}
+        {currentView.type === "demo-websites" && (
+          <InformationPage slug="demo-websites" />
+        )}
         {currentView.type === "landing" && <LandingPage />}
       </ThemeProvider>
     </Suspense>
