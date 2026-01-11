@@ -156,13 +156,12 @@ function AppContent() {
         if (slugMatch && slugMatch[1]) {
           setCurrentView({ type: "features", slug: slugMatch[1] });
         } else {
-          //localhost:4173/
-          http: setCurrentView({ type: "features", slug: "sales-marketing" });
+          setCurrentView({ type: "features", slug: "sales-marketing" });
         }
         return;
       }
 
-      setCurrentView({ type: "landing" });
+      setCurrentView({ type: "features", slug: "sales-marketing" });
     };
 
     checkRoute();
