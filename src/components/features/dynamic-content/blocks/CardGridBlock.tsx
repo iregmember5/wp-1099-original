@@ -123,22 +123,39 @@ export const CardGridBlock: React.FC<CardGridBlockProps> = ({
                         {text}
                       </h3>
                       {card.custom_description || card.card_content?.description ? (
-                        <p className="text-gray-600 dark:text-gray-300 flex-grow">
-                          {card.custom_description ||
-                            card.card_content?.description}
-                        </p>
+                        <div className="text-gray-600 dark:text-gray-300 flex-grow space-y-2">
+                          {(card.custom_description || card.card_content?.description)
+                            .split(/\n\n|\r\n\r\n/)
+                            .map((line: string, i: number) => {
+                              const trimmedLine = line.trim();
+                              if (!trimmedLine) return null;
+                              
+                              if (trimmedLine.startsWith('❌') || trimmedLine.startsWith('✔️')) {
+                                const [emoji, ...rest] = trimmedLine.split(' ');
+                                return (
+                                  <div key={i} className="flex items-start gap-2">
+                                    <span className="text-xl mt-0.5 flex-shrink-0">{emoji}</span>
+                                    <span>{rest.join(' ')}</span>
+                                  </div>
+                                );
+                              }
+                              return <p key={i}>{trimmedLine}</p>;
+                            })}
+                        </div>
                       ) : null}
                     </div>
                   </div>
                   {/* Add a subtle hover effect indicator */}
-                  <div className="mt-4 pt-4 border-t border-gray-100 dark:border-gray-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <div className="flex items-center text-blue-600 dark:text-blue-400 text-sm font-medium">
-                      Learn more
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                      </svg>
+                  {(card.custom_description || card.card_content?.description) && (
+                    <div className="mt-4 pt-4 border-t border-gray-100 dark:border-gray-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <div className="flex items-center text-blue-600 dark:text-blue-400 text-sm font-medium">
+                        Learn more
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        </svg>
+                      </div>
                     </div>
-                  </div>
+                  )}
                 </div>
               </div>
             );
