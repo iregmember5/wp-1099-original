@@ -65,12 +65,17 @@ function AppContent() {
       | "team"
       | "demo-websites";
     slug?: string;
-  }>({ type: "landing" });
+  }>({ type: "features", slug: "wp-w9-1099-chaser" });
 
   useEffect(() => {
     const checkRoute = () => {
       const path = window.location.pathname;
       const hash = window.location.hash;
+
+      if (path === "/" && !hash) {
+        setCurrentView({ type: "features", slug: "wp-w9-1099-chaser" });
+        return;
+      }
 
       if (
         path.includes("/debug-features") ||
@@ -156,12 +161,12 @@ function AppContent() {
         if (slugMatch && slugMatch[1]) {
           setCurrentView({ type: "features", slug: slugMatch[1] });
         } else {
-          setCurrentView({ type: "features", slug: "sales-marketing" });
+          setCurrentView({ type: "features", slug: "wp-w9-1099-chaser" });
         }
         return;
       }
 
-      setCurrentView({ type: "features", slug: "sales-marketing" });
+      setCurrentView({ type: "features", slug: "wp-w9-1099-chaser" });
     };
 
     checkRoute();
