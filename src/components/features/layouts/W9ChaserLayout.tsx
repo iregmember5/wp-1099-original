@@ -10,6 +10,7 @@ import { W9ChaserBenefits } from "./w9-chaser/W9ChaserBenefits";
 import { W9ChaserFeatures } from "./w9-chaser/W9ChaserFeatures";
 import { W9ChaserFAQ } from "./w9-chaser/W9ChaserFAQ";
 import { W9ChaserCTA } from "./w9-chaser/W9ChaserCTA";
+import { DynamicContentRenderer } from "../dynamic-content/DynamicContentRenderer";
 
 interface LayoutProps {
   data: FeaturesPageData;
@@ -28,6 +29,17 @@ export const W9ChaserLayout: React.FC<LayoutProps> = ({ data, theme }) => (
         heading={data.how_it_works_heading}
         description={data.how_it_works_description}
       />
+    )}
+    {data.dynamic_content && data.dynamic_content.length > 0 && (
+      <div>
+        {data.dynamic_content.map((block, index) => (
+          <DynamicContentRenderer
+            key={block.id || index}
+            block={block}
+            theme={theme}
+          />
+        ))}
+      </div>
     )}
     {data.benefits &&
       (Array.isArray(data.benefits) ? (
