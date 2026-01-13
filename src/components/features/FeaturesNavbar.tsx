@@ -1,21 +1,10 @@
-import { useEffect, useState } from "react";
-import { fetchAllFeaturesPages } from "./features-page/FeaturesPage.api";
 import type { Theme } from "../../types/features-page";
 
 interface FeaturesNavbarProps {
-  currentSlug?: string;
   theme: Theme;
 }
 
-export const FeaturesNavbar: React.FC<FeaturesNavbarProps> = ({ currentSlug, theme }) => {
-  const [pages, setPages] = useState<Array<{ slug: string; title: string }>>([]);
-
-  useEffect(() => {
-    fetchAllFeaturesPages().then((data) => {
-      setPages(data.map((p) => ({ slug: p.slug, title: p.title })));
-    });
-  }, []);
-
+export const FeaturesNavbar: React.FC<FeaturesNavbarProps> = ({ theme }) => {
   return (
     <nav style={{
       position: "sticky",
@@ -26,28 +15,21 @@ export const FeaturesNavbar: React.FC<FeaturesNavbarProps> = ({ currentSlug, the
       padding: "1rem 2rem",
     }}>
       <div style={{ maxWidth: "1200px", margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between", gap: "2rem" }}>
-        <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", fontSize: "1.5rem", fontWeight: "bold", color: theme.primaryColor }}>
+        <a href="/" style={{ display: "flex", alignItems: "center", gap: "0.5rem", fontSize: "1.5rem", fontWeight: "bold", color: theme.primaryColor, textDecoration: "none" }}>
           <span>📄</span>
           <span>WP-1099</span>
-        </div>
+        </a>
         
-        <div style={{ display: "flex", gap: "1.5rem", flex: 1, justifyContent: "center" }}>
-          {pages.map((page) => (
-            <a
-              key={page.slug}
-              href={`#features/${page.slug}`}
-              style={{
-                color: currentSlug === page.slug ? theme.primaryColor : theme.textColor,
-                textDecoration: "none",
-                fontSize: "0.9rem",
-                fontWeight: currentSlug === page.slug ? "600" : "400",
-                borderBottom: currentSlug === page.slug ? `2px solid ${theme.primaryColor}` : "none",
-                paddingBottom: "0.25rem",
-              }}
-            >
-              {page.title}
-            </a>
-          ))}
+        <div style={{ display: "flex", gap: "1.5rem" }}>
+          <a href="#salespage" style={{ color: theme.textColor, textDecoration: "none", fontSize: "0.9rem" }}>
+            Become a Partner
+          </a>
+          <a href="#about" style={{ color: theme.textColor, textDecoration: "none", fontSize: "0.9rem" }}>
+            About
+          </a>
+          <a href="#demo-websites" style={{ color: theme.textColor, textDecoration: "none", fontSize: "0.9rem" }}>
+            Demo Websites
+          </a>
         </div>
 
         <button
