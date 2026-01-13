@@ -1,3 +1,4 @@
+import { useState } from "react";
 import type { Theme } from "../../types/features-page";
 
 interface FeaturesNavbarProps {
@@ -6,6 +7,8 @@ interface FeaturesNavbarProps {
 }
 
 export const FeaturesNavbar: React.FC<FeaturesNavbarProps> = ({ currentSlug, theme }) => {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
     <nav style={{
       position: "sticky",
@@ -21,7 +24,7 @@ export const FeaturesNavbar: React.FC<FeaturesNavbarProps> = ({ currentSlug, the
           <span>WP-1099</span>
         </a>
         
-        <div style={{ display: "flex", gap: "1.5rem" }}>
+        <div style={{ display: "flex", gap: "1.5rem" }} className="desktop-nav">
           <a href="#salespage" style={{ color: theme.textColor, textDecoration: "none", fontSize: "0.9rem" }}>
             Become a Partner
           </a>
@@ -46,10 +49,81 @@ export const FeaturesNavbar: React.FC<FeaturesNavbarProps> = ({ currentSlug, the
             fontWeight: "600",
             whiteSpace: "nowrap",
           }}
+          className="desktop-btn"
         >
           Get Started
         </button>
+
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          style={{
+            background: "none",
+            border: "none",
+            color: theme.primaryColor,
+            fontSize: "1.5rem",
+            cursor: "pointer",
+            display: "none",
+          }}
+          className="mobile-menu-btn"
+        >
+          ☰
+        </button>
       </div>
+
+      {isOpen && (
+        <div style={{
+          position: "absolute",
+          top: "100%",
+          left: 0,
+          right: 0,
+          backgroundColor: theme.bgColor,
+          borderBottom: `1px solid ${theme.primaryColor}30`,
+          padding: "1rem",
+        }} className="mobile-menu">
+          <a href="#salespage" onClick={() => setIsOpen(false)} style={{ display: "block", padding: "0.75rem", color: theme.textColor, textDecoration: "none" }}>
+            Become a Partner
+          </a>
+          <a href="#about" onClick={() => setIsOpen(false)} style={{ display: "block", padding: "0.75rem", color: theme.textColor, textDecoration: "none" }}>
+            About
+          </a>
+          <a href="#demo-websites" onClick={() => setIsOpen(false)} style={{ display: "block", padding: "0.75rem", color: theme.textColor, textDecoration: "none" }}>
+            Demo Websites
+          </a>
+          <button
+            onClick={() => { window.location.hash = "#affiliate"; setIsOpen(false); }}
+            style={{
+              width: "100%",
+              marginTop: "0.5rem",
+              background: theme.primaryColor,
+              color: "#fff",
+              border: "none",
+              padding: "0.75rem",
+              borderRadius: "6px",
+              cursor: "pointer",
+              fontSize: "0.9rem",
+              fontWeight: "600",
+            }}
+          >
+            Get Started
+          </button>
+        </div>
+      )}
+
+      <style>{`
+        @media (max-width: 768px) {
+          .desktop-nav, .desktop-btn {
+            display: none !important;
+          }
+          .mobile-menu-btn {
+            display: block !important;
+          }
+        }
+        @media (min-width: 769px) {
+          .mobile-menu {
+            display: none !important;
+          }
+        }
+      `}</style>
     </nav>
   );
 };
