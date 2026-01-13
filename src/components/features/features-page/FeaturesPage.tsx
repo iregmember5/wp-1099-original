@@ -28,6 +28,7 @@ import {
   BulkEmailLayout,
   DocumentMergeLayout,
 } from "../layouts";
+import { FeaturesNavbar } from "../FeaturesNavbar";
 
 export const FeaturesPage: React.FC<FeaturesPageProps> = ({ pageId, slug }) => {
   const [data, setData] = useState<FeaturesPageData | null>(null);
@@ -228,6 +229,7 @@ export const FeaturesPage: React.FC<FeaturesPageProps> = ({ pageId, slug }) => {
   return (
     <div className="features-page" style={{ backgroundColor: theme.bgColor }}>
       <CustomStyles theme={theme} />
+      <FeaturesNavbar currentSlug={slug} theme={theme} />
       {renderLayout()}
     </div>
   );
