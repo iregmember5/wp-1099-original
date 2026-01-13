@@ -52,8 +52,26 @@ export const FeaturesPage: React.FC<FeaturesPageProps> = ({ pageId, slug }) => {
           console.log("✅ Found matching page:", matchingPage);
           setData(matchingPage);
 
-          if (matchingPage.seo_title || matchingPage.title) {
+          if (matchingPage.site_title) {
+            document.title = matchingPage.site_title;
+          } else if (matchingPage.seo_title || matchingPage.title) {
             document.title = matchingPage.seo_title || matchingPage.title;
+          }
+
+          if (matchingPage.favicon?.url) {
+            const isDev = import.meta.env.DEV;
+            const baseUrl = isDev ? "http://localhost:5173" : "https://esign-admin.signmary.com";
+            const faviconUrl = matchingPage.favicon.url.startsWith('http') 
+              ? matchingPage.favicon.url 
+              : `${baseUrl}${matchingPage.favicon.url}`;
+            
+            let link = document.querySelector("link[rel~='icon']") as HTMLLinkElement;
+            if (!link) {
+              link = document.createElement('link');
+              link.rel = 'icon';
+              document.head.appendChild(link);
+            }
+            link.href = faviconUrl;
           }
 
           setError(null);

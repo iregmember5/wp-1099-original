@@ -1,10 +1,11 @@
 import type { Theme } from "../../types/features-page";
 
 interface FeaturesNavbarProps {
+  currentSlug?: string;
   theme: Theme;
 }
 
-export const FeaturesNavbar: React.FC<FeaturesNavbarProps> = ({ theme }) => {
+export const FeaturesNavbar: React.FC<FeaturesNavbarProps> = ({ currentSlug, theme }) => {
   return (
     <nav style={{
       position: "sticky",

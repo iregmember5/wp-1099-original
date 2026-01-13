@@ -97,6 +97,8 @@ export interface FeaturesPageData {
   locked: boolean;
   first_published_at: string | null;
   last_published_at: string | null;
+  site_title?: string;
+  favicon?: ImageData;
 
   // Header Section
   header_line_before?: string;
