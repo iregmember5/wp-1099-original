@@ -135,10 +135,35 @@ const WebForm: React.FC<WebFormProps> = ({
         let fieldValue = formData[field.id] ?? "";
         
         // Special handling for phone number fields to include country code
-        // Phone number field has field_type 'text' and label containing 'Phone'
-        // Also handles 'number' type fields that are rendered with country code selectors
+        // Phone number field has field_type 'text' or 'number' and label containing 'Phone'
         if ((field.field_type === 'text' || field.field_type === 'number') && field.label.toLowerCase().includes('phone')) {
           fieldValue = `${countryCode} ${formData[field.id] || ""}`;
+        }
+        
+        // Special handling for checkbox fields with "Other" option
+        if (field.field_type === 'checkbox') {
+          const selectedValues = Array.isArray(fieldValue) ? [...fieldValue] : [];
+          
+          // Check if "Other" option is selected and there's an additional input
+          const hasOtherOption = field.choices.some(choice => 
+            choice.toLowerCase().includes("other")
+          );
+          
+          if (hasOtherOption && selectedValues.includes("Other\r")) {
+            const otherValue = formData[`${field.id}_other`];
+            if (otherValue) {
+              // Replace the "Other" placeholder with the actual custom value
+              const filteredValues = selectedValues.filter(val => !val.toLowerCase().includes("other"));
+              fieldValue = [...filteredValues, otherValue];
+            }
+          } else if (hasOtherOption && selectedValues.includes("Other")) {
+            const otherValue = formData[`${field.id}_other`];
+            if (otherValue) {
+              // Replace the "Other" placeholder with the actual custom value
+              const filteredValues = selectedValues.filter(val => !val.toLowerCase().includes("other"));
+              fieldValue = [...filteredValues, otherValue];
+            }
+          }
         }
         
         return {
