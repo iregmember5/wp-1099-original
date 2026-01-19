@@ -152,7 +152,7 @@ const WebForm: React.FC<WebFormProps> = ({
           credentials: "include",
           body: JSON.stringify({
             form_id: data.form.id,
-            webform_page_id: webformPageId,
+            page_id: webformPageId,
             submission_data,
           }),
         },
