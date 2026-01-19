@@ -65,7 +65,7 @@ function GlassNavbar({ data, onShowLogin }: GlassNavbarProps) {
   const getRouteFromPageType = (pageType: string, slug?: string): string => {
     const typeMap: Record<string, string> = {
       'landing.AboutPage': slug ? `#about/${slug}` : '#about',
-      'landing.SalesPage': '#salespage',
+      'landing.SalesPage': '/become-our-partner',
       'landing.ImageGalleryPage': '#gallery',
       'landing.PricingPage': '#pricing',
       'landing.ContactPage': '#contact',
@@ -94,9 +94,9 @@ function GlassNavbar({ data, onShowLogin }: GlassNavbarProps) {
     
     const titleMap: Record<string, string> = {
       'about': '#about',
-      'sales': '#salespage',
-      'partner': '#salespage',
-      'become': '#salespage',
+      'sales': '/become-our-partner',
+      'partner': '/become-our-partner',
+      'become': '/become-our-partner',
       'pricing': '#pricing',
       'contact': '#contact',
       'testimonial': '#testimonials',

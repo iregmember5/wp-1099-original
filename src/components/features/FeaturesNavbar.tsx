@@ -25,7 +25,7 @@ export const FeaturesNavbar: React.FC<FeaturesNavbarProps> = ({ currentSlug, the
         </a>
         
         <div style={{ display: "flex", gap: "1.5rem" }} className="desktop-nav">
-          <a href="#salespage" style={{ color: theme.textColor, textDecoration: "none", fontSize: "0.9rem" }}>
+          <a href="/become-our-partner" style={{ color: theme.textColor, textDecoration: "none", fontSize: "0.9rem" }}>
             Become a Partner
           </a>
           <a href="#about" style={{ color: theme.textColor, textDecoration: "none", fontSize: "0.9rem" }}>
@@ -80,7 +80,7 @@ export const FeaturesNavbar: React.FC<FeaturesNavbarProps> = ({ currentSlug, the
           borderBottom: `1px solid ${theme.primaryColor}30`,
           padding: "1rem",
         }} className="mobile-menu">
-          <a href="#salespage" onClick={() => setIsOpen(false)} style={{ display: "block", padding: "0.75rem", color: theme.textColor, textDecoration: "none" }}>
+          <a href="/become-our-partner" onClick={() => setIsOpen(false)} style={{ display: "block", padding: "0.75rem", color: theme.textColor, textDecoration: "none" }}>
             Become a Partner
           </a>
           <a href="#about" onClick={() => setIsOpen(false)} style={{ display: "block", padding: "0.75rem", color: theme.textColor, textDecoration: "none" }}>

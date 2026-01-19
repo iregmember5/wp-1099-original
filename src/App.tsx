@@ -128,7 +128,7 @@ function AppContent() {
         return;
       }
 
-      if (path.includes("/salespage") || hash.includes("#salespage")) {
+      if (path.includes("/become-our-partner") || path.includes("/salespage") || hash.includes("#salespage")) {
         setCurrentView({ type: "salespage" });
         return;
       }
