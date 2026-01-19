@@ -92,6 +92,7 @@ const WebForm: React.FC<WebFormProps> = ({ isOpen, onClose, data }) => {
   const [showSuccess, setShowSuccess] = useState(false);
   const [countryCode, setCountryCode] = useState("+1");
   const [showCountryDropdown, setShowCountryDropdown] = useState(false);
+  const [showOtherInput, setShowOtherInput] = useState<Record<number, boolean>>({});
 
   const handleChange = (fieldId: number, value: any) => {
     setFormData((prev) => ({ ...prev, [fieldId]: value }));
@@ -153,6 +154,75 @@ const WebForm: React.FC<WebFormProps> = ({ isOpen, onClose, data }) => {
 
     switch (field.field_type) {
       case "text":
+        const isPhoneField = field.label.toLowerCase().includes('phone');
+        
+        if (isPhoneField) {
+          return (
+            <div className="flex items-center gap-2 border-b border-gray-300 focus-within:border-purple-600 transition-colors">
+              <div className="relative">
+                <button
+                  type="button"
+                  onClick={() => setShowCountryDropdown(!showCountryDropdown)}
+                  className="flex items-center gap-1 px-2 py-2 hover:bg-gray-50 rounded"
+                >
+                  <img
+                    src={`https://flagcdn.com/16x12/${countries
+                      .find((c) => c.code === countryCode)
+                      ?.flag.toLowerCase()}.png`}
+                    alt=""
+                    className="w-4 h-3"
+                  />
+                  <span className="text-sm">{countryCode}</span>
+                  <svg
+                    className="w-4 h-4 text-gray-500"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M19 9l-7 7-7-7"
+                    />
+                  </svg>
+                </button>
+                {showCountryDropdown && (
+                  <div className="absolute top-full left-0 mt-1 w-64 max-h-60 overflow-y-auto bg-white border border-gray-300 rounded-lg shadow-lg z-10">
+                    {countries.map((c, idx) => (
+                      <button
+                        key={`${c.code}-${c.name}-${idx}`}
+                        type="button"
+                        onClick={() => {
+                          setCountryCode(c.code);
+                          setShowCountryDropdown(false);
+                        }}
+                        className="w-full flex items-center gap-2 px-3 py-2 hover:bg-gray-100 text-left"
+                      >
+                        <img
+                          src={`https://flagcdn.com/16x12/${c.flag.toLowerCase()}.png`}
+                          alt=""
+                          className="w-4 h-3"
+                        />
+                        <span className="text-sm">
+                          {c.name} {c.code}
+                        </span>
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+              <input
+                type="tel"
+                placeholder={field.placeholder || "Your answer"}
+                value={formData[field.id] || ""}
+                onChange={(e) => handleChange(field.id, e.target.value)}
+                className="flex-1 px-0 py-2 border-0 outline-none text-sm bg-transparent"
+              />
+            </div>
+          );
+        }
+        
         return (
           <input
             type="text"
@@ -279,26 +349,40 @@ const WebForm: React.FC<WebFormProps> = ({ isOpen, onClose, data }) => {
         return (
           <div className="space-y-2">
             {cleanChoices.length > 0 ? (
-              cleanChoices.map((choice, idx) => (
-                <label
-                  key={idx}
-                  className="flex items-start gap-3 cursor-pointer py-1"
-                >
-                  <input
-                    type="checkbox"
-                    checked={(formData[field.id] || []).includes(choice)}
-                    onChange={(e) => {
-                      const current = formData[field.id] || [];
-                      const updated = e.target.checked
-                        ? [...current, choice]
-                        : current.filter((c: string) => c !== choice);
-                      handleChange(field.id, updated);
-                    }}
-                    className="w-5 h-5 text-purple-600 border-gray-400 rounded focus:ring-purple-600 cursor-pointer mt-0.5"
-                  />
-                  <span className="text-sm text-gray-700">{choice}</span>
-                </label>
-              ))
+              <>
+                {cleanChoices.map((choice, idx) => (
+                  <div key={idx}>
+                    <label className="flex items-start gap-3 cursor-pointer py-1">
+                      <input
+                        type="checkbox"
+                        checked={(formData[field.id] || []).includes(choice)}
+                        onChange={(e) => {
+                          const current = formData[field.id] || [];
+                          const updated = e.target.checked
+                            ? [...current, choice]
+                            : current.filter((c: string) => c !== choice);
+                          handleChange(field.id, updated);
+                          
+                          if (choice.toLowerCase().includes('other')) {
+                            setShowOtherInput(prev => ({ ...prev, [field.id]: e.target.checked }));
+                          }
+                        }}
+                        className="w-5 h-5 text-purple-600 border-gray-400 rounded focus:ring-purple-600 cursor-pointer mt-0.5"
+                      />
+                      <span className="text-sm text-gray-700">{choice}</span>
+                    </label>
+                    {choice.toLowerCase().includes('other') && showOtherInput[field.id] && (
+                      <input
+                        type="text"
+                        placeholder="Please specify"
+                        value={formData[`${field.id}_other`] || ""}
+                        onChange={(e) => handleChange(`${field.id}_other`, e.target.value)}
+                        className="w-full mt-2 ml-8 px-3 py-2 border border-gray-300 rounded focus:border-purple-600 outline-none text-sm"
+                      />
+                    )}
+                  </div>
+                ))}
+              </>
             ) : (
               <label className="flex items-center gap-3 cursor-pointer py-1">
                 <input
@@ -341,7 +425,7 @@ const WebForm: React.FC<WebFormProps> = ({ isOpen, onClose, data }) => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-50 flex items-start justify-center p-4 bg-gray-100 overflow-y-auto"
+          className="fixed inset-0 z-50 flex items-start justify-center p-4 bg-black/60 overflow-y-auto"
           onClick={onClose}
         >
           <motion.div
@@ -357,7 +441,7 @@ const WebForm: React.FC<WebFormProps> = ({ isOpen, onClose, data }) => {
             >
               <EasyIcon
                 iconPath="feather/FiX"
-                className="w-5 h-5 text-gray-600"
+                className="w-5 h-5 text-white"
               />
             </button>
 
