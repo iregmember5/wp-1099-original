@@ -95,6 +95,16 @@ const WebForm: React.FC<WebFormProps> = ({ isOpen, onClose, data, pageId }) => {
   const [showCountryDropdown, setShowCountryDropdown] = useState(false);
   const [showOtherInput, setShowOtherInput] = useState<Record<number, boolean>>({});
 
+  // Fetch CSRF token when form opens
+  React.useEffect(() => {
+    if (isOpen) {
+      fetch('https://esign-admin.signmary.com/blogs/api/v2/sales-pages/submit-form/', {
+        method: 'GET',
+        credentials: 'include',
+      }).catch(() => {});
+    }
+  }, [isOpen]);
+
   const handleChange = (fieldId: number, value: any) => {
     setFormData((prev) => ({ ...prev, [fieldId]: value }));
     setErrors((prev) => ({ ...prev, [fieldId]: "" }));
@@ -132,6 +142,11 @@ const WebForm: React.FC<WebFormProps> = ({ isOpen, onClose, data, pageId }) => {
       };
 
       const csrftoken = getCookie('csrftoken');
+      
+      if (!csrftoken) {
+        console.error('CSRF token not found');
+        return;
+      }
 
       // Using sales page specific endpoint for form submission
       const response = await fetch(
@@ -140,8 +155,8 @@ const WebForm: React.FC<WebFormProps> = ({ isOpen, onClose, data, pageId }) => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            "X-CSRFToken": csrftoken,
             "X-Frontend-Url": "https://wp-1099.com",
-            ...(csrftoken && { "X-CSRFToken": csrftoken }),
           },
           credentials: 'include',
           body: JSON.stringify({ 

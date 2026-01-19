@@ -64,20 +64,22 @@ export default function TaxAdvisorLandingPage() {
 
         // Force update title and favicon after page loads
         setTimeout(() => {
-          fetch('https://esign-admin.signmary.com/api/site-settings/')
-            .then(res => res.json())
-            .then(settings => {
+          fetch("https://esign-admin.signmary.com/api/site-settings/")
+            .then((res) => res.json())
+            .then((settings) => {
               if (settings.site_title) {
                 document.title = settings.site_title;
               }
               if (settings.favicon?.url) {
-                const faviconUrl = settings.favicon.url.startsWith('http') 
-                  ? settings.favicon.url 
+                const faviconUrl = settings.favicon.url.startsWith("http")
+                  ? settings.favicon.url
                   : `https://esign-admin.signmary.com${settings.favicon.url}`;
-                let link = document.querySelector("link[rel~='icon']") as HTMLLinkElement;
+                let link = document.querySelector(
+                  "link[rel~='icon']",
+                ) as HTMLLinkElement;
                 if (!link) {
-                  link = document.createElement('link');
-                  link.rel = 'icon';
+                  link = document.createElement("link");
+                  link.rel = "icon";
                   document.head.appendChild(link);
                 }
                 link.href = faviconUrl;
@@ -109,7 +111,7 @@ export default function TaxAdvisorLandingPage() {
           <div className="bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 text-white py-4 px-4 text-center font-bold shadow-2xl relative overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-pulse" />
             <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 relative z-10">
-              <p className="text-3xl font-extrabold drop-shadow-lg">
+              <p className="text-4xl font-extrabold drop-shadow-lg">
                 {pageData.header_section.title}
               </p>
               {pageData.header_section.button?.text && (
@@ -179,7 +181,7 @@ export default function TaxAdvisorLandingPage() {
                     <div className="absolute inset-0 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-3xl blur-2xl opacity-50" />
                     <img
                       src={prependImageUrl(
-                        pageData.main_hero_section.image.url
+                        pageData.main_hero_section.image.url,
                       )}
                       alt="Workshop Hero"
                       className="relative rounded-3xl shadow-2xl w-full border-4 border-yellow-500/30"
@@ -222,7 +224,7 @@ export default function TaxAdvisorLandingPage() {
                             {item.name}
                           </span>
                         </div>
-                      )
+                      ),
                     )}
                   </div>
                 ))}
@@ -236,7 +238,9 @@ export default function TaxAdvisorLandingPage() {
             <div className="container mx-auto px-4 py-24">
               {pageData.card_sections.main_header && (
                 <div className="text-center mb-16">
-                  <div className="inline-block bg-gradient-to-r from-yellow-400 to-orange-500 text-black px-6 py-2 rounded-full text-sm font-bold mb-4">WHAT YOU'LL DISCOVER</div>
+                  <div className="inline-block bg-gradient-to-r from-yellow-400 to-orange-500 text-black px-6 py-2 rounded-full text-sm font-bold mb-4">
+                    WHAT YOU'LL DISCOVER
+                  </div>
                   <h2 className="text-5xl md:text-6xl font-black text-white mb-4">
                     {pageData.card_sections.main_header}
                   </h2>
@@ -257,9 +261,21 @@ export default function TaxAdvisorLandingPage() {
                           {idx + 1}
                         </div>
                         <div className="flex-1">
-                          {card.title && <h3 className="text-2xl font-bold text-white mb-2">{card.title}</h3>}
-                          {card.subtitle && <h4 className="text-lg font-semibold text-yellow-400 mb-3">{card.subtitle}</h4>}
-                          {card.description && <p className="text-gray-400 leading-relaxed">{card.description}</p>}
+                          {card.title && (
+                            <h3 className="text-2xl font-bold text-white mb-2">
+                              {card.title}
+                            </h3>
+                          )}
+                          {card.subtitle && (
+                            <h4 className="text-lg font-semibold text-yellow-400 mb-3">
+                              {card.subtitle}
+                            </h4>
+                          )}
+                          {card.description && (
+                            <p className="text-gray-400 leading-relaxed">
+                              {card.description}
+                            </p>
+                          )}
                         </div>
                       </div>
                     </div>
@@ -275,7 +291,9 @@ export default function TaxAdvisorLandingPage() {
             <div className="relative max-w-5xl mx-auto">
               <div className="absolute inset-0 bg-gradient-to-r from-yellow-500 via-orange-500 to-red-500 rounded-3xl blur-2xl opacity-30" />
               <div className="relative bg-black border-4 border-yellow-500 rounded-3xl p-12 text-center">
-                <div className="inline-block bg-yellow-400 text-black px-4 py-1 rounded-full text-xs font-black uppercase mb-6">Limited Time Offer</div>
+                <div className="inline-block bg-yellow-400 text-black px-4 py-1 rounded-full text-xs font-black uppercase mb-6">
+                  Limited Time Offer
+                </div>
                 <h2 className="text-4xl md:text-6xl font-black text-white mb-4">
                   {pageData.secondary_cta_section.heading}
                 </h2>
@@ -304,23 +322,32 @@ export default function TaxAdvisorLandingPage() {
 
         {/* Meet Your Speakers */}
         {pageData?.images_gallery_section?.images &&
-          pageData.images_gallery_section.images.filter((img: any) => img.image).length > 0 && (
+          pageData.images_gallery_section.images.filter((img: any) => img.image)
+            .length > 0 && (
             <div className="container mx-auto px-4 py-24">
               {pageData.images_gallery_section.heading && (
                 <div className="text-center mb-16">
-                  <h2 className="text-5xl font-black text-white mb-4">{pageData.images_gallery_section.heading}</h2>
+                  <h2 className="text-5xl font-black text-white mb-4">
+                    {pageData.images_gallery_section.heading}
+                  </h2>
                   <div className="w-24 h-1 bg-gradient-to-r from-yellow-400 to-orange-500 mx-auto rounded-full" />
                 </div>
               )}
               <div className="flex flex-wrap justify-center gap-12 max-w-5xl mx-auto">
-                {pageData.images_gallery_section.images.filter((img: any) => img.image).map((img: any, i: number) => (
-                  <div key={i} className="relative group">
-                    <div className="absolute -inset-2 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-full blur-lg opacity-50 group-hover:opacity-100 transition-opacity" />
-                    <div className="relative w-48 h-48 rounded-full overflow-hidden border-4 border-yellow-500 shadow-2xl">
-                      <img src={prependImageUrl(img.image?.url)} alt={img.caption || "Speaker"} className="w-full h-full object-cover" />
+                {pageData.images_gallery_section.images
+                  .filter((img: any) => img.image)
+                  .map((img: any, i: number) => (
+                    <div key={i} className="relative group">
+                      <div className="absolute -inset-2 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-full blur-lg opacity-50 group-hover:opacity-100 transition-opacity" />
+                      <div className="relative w-48 h-48 rounded-full overflow-hidden border-4 border-yellow-500 shadow-2xl">
+                        <img
+                          src={prependImageUrl(img.image?.url)}
+                          alt={img.caption || "Speaker"}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
               </div>
             </div>
           )}
@@ -331,17 +358,25 @@ export default function TaxAdvisorLandingPage() {
             <div className="max-w-lg mx-auto">
               <div className="bg-gradient-to-br from-gray-900 to-black border-2 border-yellow-500 rounded-3xl overflow-hidden shadow-2xl">
                 <div className="bg-gradient-to-r from-yellow-400 to-orange-500 p-6 text-center">
-                  <p className="text-black font-black text-sm uppercase tracking-wider">{pageData.primary_cta_section.heading}</p>
+                  <p className="text-black font-black text-sm uppercase tracking-wider">
+                    {pageData.primary_cta_section.heading}
+                  </p>
                 </div>
                 <div className="p-10 text-center">
                   {pageData.primary_cta_section.subtitle && (
-                    <div className="text-7xl font-black text-white mb-4">{pageData.primary_cta_section.subtitle}</div>
+                    <div className="text-7xl font-black text-white mb-4">
+                      {pageData.primary_cta_section.subtitle}
+                    </div>
                   )}
                   {pageData.primary_cta_section.description && (
-                    <p className="text-gray-400 mb-6">{pageData.primary_cta_section.description}</p>
+                    <p className="text-gray-400 mb-6">
+                      {pageData.primary_cta_section.description}
+                    </p>
                   )}
                   {pageData.primary_cta_section.subdescription && (
-                    <p className="text-yellow-400 font-bold text-lg mb-8">{pageData.primary_cta_section.subdescription}</p>
+                    <p className="text-yellow-400 font-bold text-lg mb-8">
+                      {pageData.primary_cta_section.subdescription}
+                    </p>
                   )}
                   {pageData.primary_cta_section.button?.text && (
                     <button
@@ -367,7 +402,7 @@ export default function TaxAdvisorLandingPage() {
               s.subdescription ||
               s.button?.text ||
               s.image ||
-              s.cards?.length > 0
+              s.cards?.length > 0,
           )
           .map((section: any, idx: number) => (
             <div key={idx} className="relative py-24 overflow-hidden">
@@ -375,7 +410,7 @@ export default function TaxAdvisorLandingPage() {
               <div className="absolute inset-0 bg-gradient-to-b from-yellow-500/5 via-transparent to-orange-500/5" />
               <div className="absolute top-0 left-1/4 w-96 h-96 bg-yellow-500/10 rounded-full blur-3xl" />
               <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-orange-500/10 rounded-full blur-3xl" />
-              
+
               <div className="container mx-auto px-4 relative z-10">
                 <div className="max-w-7xl mx-auto">
                   {/* Section Header */}
@@ -417,14 +452,22 @@ export default function TaxAdvisorLandingPage() {
                               )}
                               {card.description && (
                                 <div className="text-gray-400 text-sm leading-relaxed space-y-2">
-                                  {card.description.split('\n').map((line: string, idx: number) => (
-                                    line.trim() && (
-                                      <div key={idx} className="flex items-start gap-2">
-                                        <span className="text-yellow-500 mt-1 flex-shrink-0">•</span>
-                                        <span>{line.replace(/^🔸\s*/, '')}</span>
-                                      </div>
-                                    )
-                                  ))}
+                                  {card.description.split("\n").map(
+                                    (line: string, idx: number) =>
+                                      line.trim() && (
+                                        <div
+                                          key={idx}
+                                          className="flex items-start gap-2"
+                                        >
+                                          <span className="text-yellow-500 mt-1 flex-shrink-0">
+                                            •
+                                          </span>
+                                          <span>
+                                            {line.replace(/^🔸\s*/, "")}
+                                          </span>
+                                        </div>
+                                      ),
+                                  )}
                                 </div>
                               )}
                             </div>
@@ -440,7 +483,9 @@ export default function TaxAdvisorLandingPage() {
                         onClick={() => setShowWebForm(true)}
                         className="group relative bg-gradient-to-r from-yellow-400 via-orange-500 to-yellow-400 text-black font-black py-5 px-12 rounded-full text-xl hover:scale-105 transition-all shadow-2xl overflow-hidden"
                       >
-                        <span className="relative z-10">{section.button.text} →</span>
+                        <span className="relative z-10">
+                          {section.button.text} →
+                        </span>
                         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000" />
                       </button>
                     </div>
@@ -454,7 +499,7 @@ export default function TaxAdvisorLandingPage() {
         {pageData?.simple_cta_sections
           ?.filter(
             (c: any) =>
-              c.heading || c.subtitle || c.description || c.button?.text
+              c.heading || c.subtitle || c.description || c.button?.text,
           )
           .map((cta: any, idx: number) => (
             <div key={idx} className="container mx-auto px-4 py-16 text-center">
@@ -492,7 +537,7 @@ export default function TaxAdvisorLandingPage() {
                 onClick={() => setShowWebForm(true)}
                 className="bg-gradient-to-r from-yellow-400 to-orange-500 text-black font-black py-5 px-12 rounded-full text-xl hover:scale-105 transition-transform shadow-2xl"
               >
-                {pageData.web_form_section.form.form_title || 'Apply Now'}
+                {pageData.web_form_section.form.form_title || "Apply Now"}
               </button>
             </div>
           </div>
@@ -516,31 +561,49 @@ export default function TaxAdvisorLandingPage() {
         )}
 
         {/* FAQ Section */}
-        {pageData?.faq_section?.faqs && pageData.faq_section.faqs.length > 0 && (
-          <div className="container mx-auto px-4 py-24">
-            <div className="max-w-4xl mx-auto">
-              <div className="text-center mb-12">
-                <h2 className="text-5xl font-black text-white mb-4">{pageData.faq_section.heading}</h2>
-                <div className="w-24 h-1 bg-gradient-to-r from-yellow-400 to-orange-500 mx-auto rounded-full" />
-              </div>
-              <div className="space-y-4">
-                {pageData.faq_section.faqs.map((faq: any, i: number) => (
-                  <div key={i} className="bg-gray-900 border border-gray-800 rounded-2xl overflow-hidden hover:border-yellow-500/50 transition-colors">
-                    <button onClick={() => setOpenFaq(openFaq === i ? null : i)} className="w-full text-left p-6 flex justify-between items-center group">
-                      <span className="text-lg font-bold text-white group-hover:text-yellow-400 transition-colors pr-4">{faq.question}</span>
-                      <div className="flex-shrink-0 w-8 h-8 bg-yellow-500/20 rounded-full flex items-center justify-center group-hover:bg-yellow-500/30 transition-colors">
-                        {openFaq === i ? <ChevronUp className="w-5 h-5 text-yellow-400" /> : <ChevronDown className="w-5 h-5 text-yellow-400" />}
-                      </div>
-                    </button>
-                    {openFaq === i && (
-                      <div className="px-6 pb-6 text-gray-400 leading-relaxed border-t border-gray-800" dangerouslySetInnerHTML={{ __html: faq.answer }} />
-                    )}
-                  </div>
-                ))}
+        {pageData?.faq_section?.faqs &&
+          pageData.faq_section.faqs.length > 0 && (
+            <div className="container mx-auto px-4 py-24">
+              <div className="max-w-4xl mx-auto">
+                <div className="text-center mb-12">
+                  <h2 className="text-5xl font-black text-white mb-4">
+                    {pageData.faq_section.heading}
+                  </h2>
+                  <div className="w-24 h-1 bg-gradient-to-r from-yellow-400 to-orange-500 mx-auto rounded-full" />
+                </div>
+                <div className="space-y-4">
+                  {pageData.faq_section.faqs.map((faq: any, i: number) => (
+                    <div
+                      key={i}
+                      className="bg-gray-900 border border-gray-800 rounded-2xl overflow-hidden hover:border-yellow-500/50 transition-colors"
+                    >
+                      <button
+                        onClick={() => setOpenFaq(openFaq === i ? null : i)}
+                        className="w-full text-left p-6 flex justify-between items-center group"
+                      >
+                        <span className="text-lg font-bold text-white group-hover:text-yellow-400 transition-colors pr-4">
+                          {faq.question}
+                        </span>
+                        <div className="flex-shrink-0 w-8 h-8 bg-yellow-500/20 rounded-full flex items-center justify-center group-hover:bg-yellow-500/30 transition-colors">
+                          {openFaq === i ? (
+                            <ChevronUp className="w-5 h-5 text-yellow-400" />
+                          ) : (
+                            <ChevronDown className="w-5 h-5 text-yellow-400" />
+                          )}
+                        </div>
+                      </button>
+                      {openFaq === i && (
+                        <div
+                          className="px-6 pb-6 text-gray-400 leading-relaxed border-t border-gray-800"
+                          dangerouslySetInnerHTML={{ __html: faq.answer }}
+                        />
+                      )}
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
-          </div>
-        )}
+          )}
       </div>
 
       {pageData?.web_form_section && (
