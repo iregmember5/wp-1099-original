@@ -131,13 +131,13 @@ export default function TaxAdvisorLandingPage() {
           </div>
         )}
         {pageData?.header_section?.line_one && (
-          <p className="text-xl sm:text-sm mt-2 text-center font-bold text-yellow-300">
+          <p className="text-2xl sm:text-3xl mt-2 text-center font-bold text-yellow-300">
             {pageData.header_section.line_one}
           </p>
         )}
 
         {/* Hero Section */}
-        <div className="relative overflow-hidden py-20">
+        <div className="relative overflow-hidden py-8">
           <div className="absolute inset-0 bg-gradient-to-br from-yellow-500/20 via-orange-500/10 to-transparent"></div>
           <div className="absolute top-20 right-20 w-96 h-96 bg-yellow-500/10 rounded-full blur-3xl animate-pulse" />
           <div
@@ -145,21 +145,21 @@ export default function TaxAdvisorLandingPage() {
             style={{ animationDelay: "1s" }}
           />
 
-          <div className="container mx-auto px-4 py-12 relative max-w-7xl">
-            <div className="grid md:grid-cols-2 gap-12 items-center">
-              <div className="text-center md:text-left space-y-8">
+          <div className="container mx-auto px-4 py-4 relative max-w-7xl">
+            <div className="grid md:grid-cols-2 gap-8 items-center">
+              <div className="text-center md:text-left space-y-4">
                 {pageData?.main_hero_section?.heading && (
-                  <h1 className="text-5xl sm:text-6xl md:text-7xl font-black mb-6 leading-tight bg-gradient-to-r from-yellow-400 via-orange-400 to-yellow-400 bg-clip-text text-transparent drop-shadow-2xl">
+                  <h1 className="text-4xl sm:text-5xl md:text-6xl font-black mb-4 leading-tight bg-gradient-to-r from-yellow-400 via-orange-400 to-yellow-400 bg-clip-text text-transparent drop-shadow-2xl">
                     {pageData.main_hero_section.heading}
                   </h1>
                 )}
                 {pageData?.main_hero_section?.subheading && (
-                  <p className="text-gray-300 text-lg sm:text-xl max-w-2xl mx-auto md:mx-0 mb-8 leading-relaxed">
+                  <p className="text-gray-300 text-base sm:text-lg max-w-2xl mx-auto md:mx-0 mb-4 leading-relaxed">
                     {pageData.main_hero_section.subheading}
                   </p>
                 )}
                 {pageData?.main_hero_section?.description && (
-                  <p className="text-gray-300 text-lg sm:text-xl max-w-2xl mx-auto md:mx-0 mb-8 leading-relaxed">
+                  <p className="text-gray-300 text-base sm:text-lg max-w-2xl mx-auto md:mx-0 mb-4 leading-relaxed">
                     {pageData.main_hero_section.description}
                   </p>
                 )}
