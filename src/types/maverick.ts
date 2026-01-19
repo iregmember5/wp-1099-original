@@ -35,7 +35,7 @@ export const prependImageUrl = (url: string | undefined) => {
 
 export const fetchLandingPageData = async (): Promise<SalesPages | null> => {
   try {
-    const apiUrl = `${baseApiUrl}/sales-pages/?fields=*`;
+    const apiUrl = `${baseApiUrl}/sales-pages/`;
 
     const response = await fetch(apiUrl, {
       method: "GET",
