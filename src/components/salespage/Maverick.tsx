@@ -109,7 +109,7 @@ export default function TaxAdvisorLandingPage() {
           <div className="bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 text-white py-4 px-4 text-center font-bold shadow-2xl relative overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-pulse" />
             <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 relative z-10">
-              <p className="text-sm sm:text-base font-extrabold drop-shadow-lg">
+              <p className="text-3xl font-extrabold drop-shadow-lg">
                 {pageData.header_section.title}
               </p>
               {pageData.header_section.button?.text && (
