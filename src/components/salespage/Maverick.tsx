@@ -64,7 +64,13 @@ export default function TaxAdvisorLandingPage() {
       );
       const data = await response.json();
       if (data.items && data.items.length > 0) {
-        setWebformPageData(data.items[0]);
+        const webformPage = data.items[0];
+        setWebformPageData({
+          id: webformPage.id,
+          web_form_section: {
+            form: webformPage.web_form
+          }
+        });
         setShowWebForm(true);
       }
     } catch (error) {
