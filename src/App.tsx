@@ -130,9 +130,13 @@ function AppContent() {
 
       if (
         path.includes("/become-a-partner") ||
+        path.includes("/become-our-partner") ||
         path.includes("/salespage") ||
         hash.includes("#salespage")
       ) {
+        if (path.includes("/become-our-partner")) {
+          window.history.replaceState(null, "", "/become-a-partner");
+        }
         setCurrentView({ type: "salespage" });
         return;
       }
