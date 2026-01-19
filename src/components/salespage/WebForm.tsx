@@ -123,6 +123,9 @@ const WebForm: React.FC<WebFormProps> = ({ isOpen, onClose, data, pageId }) => {
         value: formData[field.id] ?? "",
       }));
 
+      // Hardcoded page ID as 139 based on database record
+      const finalPageId = 139;
+
       const response = await fetch(
         "https://esign-admin.signmary.com/blogs/api/v2/submit-form/",
         {
@@ -133,7 +136,7 @@ const WebForm: React.FC<WebFormProps> = ({ isOpen, onClose, data, pageId }) => {
           },
           body: JSON.stringify({ 
             form_id: data.form.id, 
-            page_id: pageId || data.form.id,
+            page_id: finalPageId,
             submission_data 
           }),
         }
@@ -146,6 +149,10 @@ const WebForm: React.FC<WebFormProps> = ({ isOpen, onClose, data, pageId }) => {
           onClose();
           setFormData({});
         }, 3000);
+      } else {
+        // Handle non-successful responses
+        const errorData = await response.json();
+        console.error("Form submission error:", errorData);
       }
     } catch (error) {
       console.error("Form submission error:", error);
