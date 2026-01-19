@@ -131,11 +131,22 @@ const WebForm: React.FC<WebFormProps> = ({
 
     setIsSubmitting(true);
     try {
-      const submission_data = data.form.fields.map((field) => ({
-        field_id: field.id,
-        label: field.label,
-        value: formData[field.id] ?? "",
-      }));
+      const submission_data = data.form.fields.map((field) => {
+        let fieldValue = formData[field.id] ?? "";
+        
+        // Special handling for phone number fields to include country code
+        // Phone number field has field_type 'text' and label containing 'Phone'
+        // Also handles 'number' type fields that are rendered with country code selectors
+        if ((field.field_type === 'text' || field.field_type === 'number') && field.label.toLowerCase().includes('phone')) {
+          fieldValue = `${countryCode} ${formData[field.id] || ""}`;
+        }
+        
+        return {
+          field_id: field.id,
+          label: field.label,
+          value: fieldValue,
+        };
+      });
 
       const getCookie = (name: string) => {
         const value = `; ${document.cookie}`;
