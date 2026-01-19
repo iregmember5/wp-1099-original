@@ -60,8 +60,31 @@ export default function TaxAdvisorLandingPage() {
       .then(([landingData, featuresData]) => {
         setPageData(landingData);
         setFeaturesData(featuresData);
-
         setLoading(false);
+
+        // Force update title and favicon after page loads
+        setTimeout(() => {
+          fetch('https://esign-admin.signmary.com/api/site-settings/')
+            .then(res => res.json())
+            .then(settings => {
+              if (settings.site_title) {
+                document.title = settings.site_title;
+              }
+              if (settings.favicon?.url) {
+                const faviconUrl = settings.favicon.url.startsWith('http') 
+                  ? settings.favicon.url 
+                  : `https://esign-admin.signmary.com${settings.favicon.url}`;
+                let link = document.querySelector("link[rel~='icon']") as HTMLLinkElement;
+                if (!link) {
+                  link = document.createElement('link');
+                  link.rel = 'icon';
+                  document.head.appendChild(link);
+                }
+                link.href = faviconUrl;
+              }
+            })
+            .catch(console.error);
+        }, 100);
       })
       .catch(console.error);
   }, []);
