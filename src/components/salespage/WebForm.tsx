@@ -130,7 +130,11 @@ const WebForm: React.FC<WebFormProps> = ({ isOpen, onClose, data }) => {
             "Content-Type": "application/json",
             "X-Frontend-Url": "https://wp-1099.com",
           },
-          body: JSON.stringify({ form_id: data.form.id, submission_data }),
+          body: JSON.stringify({ 
+            form_id: data.form.id, 
+            page_id: window.location.pathname,
+            submission_data 
+          }),
         }
       );
 
