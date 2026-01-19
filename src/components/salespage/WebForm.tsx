@@ -123,8 +123,15 @@ const WebForm: React.FC<WebFormProps> = ({ isOpen, onClose, data, pageId }) => {
         value: formData[field.id] ?? "",
       }));
 
-      // Hardcoded page ID as 139 based on database record
-      const finalPageId = 139;
+      // Get CSRF token from cookie
+      const getCookie = (name: string) => {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop()?.split(';').shift();
+        return null;
+      };
+
+      const csrftoken = getCookie('csrftoken');
 
       // Using sales page specific endpoint for form submission
       const response = await fetch(
@@ -134,10 +141,11 @@ const WebForm: React.FC<WebFormProps> = ({ isOpen, onClose, data, pageId }) => {
           headers: {
             "Content-Type": "application/json",
             "X-Frontend-Url": "https://wp-1099.com",
+            ...(csrftoken && { "X-CSRFToken": csrftoken }),
           },
+          credentials: 'include',
           body: JSON.stringify({ 
-            form_id: data.form.id, 
-            page_id: finalPageId,
+            form_id: data.form.id,
             submission_data 
           }),
         }
