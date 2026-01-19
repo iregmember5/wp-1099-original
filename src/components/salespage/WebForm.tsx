@@ -126,8 +126,9 @@ const WebForm: React.FC<WebFormProps> = ({ isOpen, onClose, data, pageId }) => {
       // Hardcoded page ID as 139 based on database record
       const finalPageId = 139;
 
+      // Using sales page specific endpoint for form submission
       const response = await fetch(
-        "https://esign-admin.signmary.com/blogs/api/v2/submit-form/",
+        "https://esign-admin.signmary.com/blogs/api/v2/sales-pages/submit-form/",
         {
           method: "POST",
           headers: {

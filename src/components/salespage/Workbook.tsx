@@ -48,12 +48,12 @@ export default function WorkbookOfferPage({ data }: WorkbookProps) {
       <style>{styles}</style>
       <div className="bg-black text-white fixed inset-0 w-screen h-screen overflow-y-auto">
         {/* Top Yellow Banner */}
-        <div className="bg-yellow-500 text-black text-center py-2 px-4 font-bold text-xl">
+        <div className="bg-yellow-500 text-black text-center py-3 px-4 font-bold text-3xl">
           <u>{data?.header_line_before}</u>
         </div>
 
         {/* Hero Section */}
-        <div className="geometric-bg py-16 px-4">
+        <div className="geometric-bg py-8 px-4">
           <div className="container mx-auto max-w-5xl">
             <div className="grid md:grid-cols-2 gap-8 items-center">
               <div>
@@ -82,7 +82,7 @@ export default function WorkbookOfferPage({ data }: WorkbookProps) {
                   className="w-full aspect-video rounded-lg border-4 border-yellow-500"
                   src={data?.header_video?.video_url?.replace(
                     "youtu.be/",
-                    "www.youtube.com/embed/"
+                    "www.youtube.com/embed/",
                   )}
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
@@ -168,7 +168,7 @@ export default function WorkbookOfferPage({ data }: WorkbookProps) {
             <div className="flex flex-col md:flex-row justify-center items-center gap-8 mb-8">
               <img
                 src={prependImageUrl(
-                  data?.card_sections?.items?.[0]?.card_image?.url
+                  data?.card_sections?.items?.[0]?.card_image?.url,
                 )}
                 alt={data?.card_sections?.items?.[0]?.card_image?.title}
               />
@@ -202,7 +202,7 @@ export default function WorkbookOfferPage({ data }: WorkbookProps) {
                   ?.replace(/\n\n/g, "<br/><br/>")
                   .replace(
                     /✓/g,
-                    '<span class="text-green-500 text-xl">✓</span>'
+                    '<span class="text-green-500 text-xl">✓</span>',
                   ),
               }}
             />
@@ -471,7 +471,7 @@ export default function WorkbookOfferPage({ data }: WorkbookProps) {
               dangerouslySetInnerHTML={{
                 __html: data?.footer_config?.additional_footer_text?.replace(
                   /\n\n/g,
-                  "</p><p>"
+                  "</p><p>",
                 ),
               }}
             />

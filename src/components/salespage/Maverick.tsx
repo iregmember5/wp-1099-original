@@ -158,6 +158,11 @@ export default function TaxAdvisorLandingPage() {
                     {pageData.main_hero_section.subheading}
                   </p>
                 )}
+                {pageData?.main_hero_section?.description && (
+                  <p className="text-gray-300 text-lg sm:text-xl max-w-2xl mx-auto md:mx-0 mb-8 leading-relaxed">
+                    {pageData.main_hero_section.description}
+                  </p>
+                )}
 
                 {pageData?.main_hero_section?.button?.text && (
                   <button
@@ -482,10 +487,13 @@ export default function TaxAdvisorLandingPage() {
                 {pageData.web_form_section.description}
               </p>
             )}
-            <div className="max-w-2xl mx-auto">
-              <p className="text-center text-gray-400">
-                Form ID: {typeof pageData.web_form_section.form === 'object' ? pageData.web_form_section.form.id : pageData.web_form_section.form}
-              </p>
+            <div className="max-w-2xl mx-auto text-center">
+              <button
+                onClick={() => setShowWebForm(true)}
+                className="bg-gradient-to-r from-yellow-400 to-orange-500 text-black font-black py-5 px-12 rounded-full text-xl hover:scale-105 transition-transform shadow-2xl"
+              >
+                {pageData.web_form_section.form.form_title || 'Apply Now'}
+              </button>
             </div>
           </div>
         )}
