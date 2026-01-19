@@ -30,6 +30,7 @@ interface WebFormProps {
   isOpen: boolean;
   onClose: () => void;
   data: WebFormData;
+  pageId?: number;
 }
 
 const countries = [
@@ -85,7 +86,7 @@ const countries = [
   { code: "+61", name: "AU", flag: "AU" },
 ];
 
-const WebForm: React.FC<WebFormProps> = ({ isOpen, onClose, data }) => {
+const WebForm: React.FC<WebFormProps> = ({ isOpen, onClose, data, pageId }) => {
   const [formData, setFormData] = useState<Record<string, any>>({});
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -131,7 +132,7 @@ const WebForm: React.FC<WebFormProps> = ({ isOpen, onClose, data }) => {
           },
           body: JSON.stringify({ 
             form_id: data.form.id, 
-            page_id: window.location.pathname,
+            page_id: pageId || data.form.id,
             submission_data 
           }),
         }
