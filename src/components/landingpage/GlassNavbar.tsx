@@ -64,65 +64,68 @@ function GlassNavbar({ data, onShowLogin }: GlassNavbarProps) {
   // Intelligent page type to route mapping
   const getRouteFromPageType = (pageType: string, slug?: string): string => {
     const typeMap: Record<string, string> = {
-      'landing.AboutPage': slug ? `#about/${slug}` : '#about',
-      'landing.SalesPage': '/become-our-partner',
-      'landing.ImageGalleryPage': '#gallery',
-      'landing.PricingPage': '#pricing',
-      'landing.ContactPage': '#contact',
-      'landing.TestimonialsPage': '#testimonials',
-      'landing.FeaturesPage': '#features',
-      'landing.FAQPage': '#faq',
-      'landing.TeamPage': '#team',
-      'landing.BlogPage': '#blog',
-      'landing.PortfolioPage': '#portfolio',
-      'landing.ServicesPage': '#services',
+      "landing.AboutPage": slug ? `#about/${slug}` : "#about",
+      "landing.SalesPage": "/become-a-partner",
+      "landing.ImageGalleryPage": "#gallery",
+      "landing.PricingPage": "#pricing",
+      "landing.ContactPage": "#contact",
+      "landing.TestimonialsPage": "#testimonials",
+      "landing.FeaturesPage": "#features",
+      "landing.FAQPage": "#faq",
+      "landing.TeamPage": "#team",
+      "landing.BlogPage": "#blog",
+      "landing.PortfolioPage": "#portfolio",
+      "landing.ServicesPage": "#services",
     };
-    return typeMap[pageType] || '#';
+    return typeMap[pageType] || "#";
   };
 
   // Intelligent title to route mapping
   const getRouteFromTitle = (title: string): string => {
     const lower = title.toLowerCase();
-    
+
     // Exact phrase matching first
-    if (lower.includes('why our website builder') || lower.includes('why website builder')) {
-      return '#about/why-our-website-builder';
+    if (
+      lower.includes("why our website builder") ||
+      lower.includes("why website builder")
+    ) {
+      return "#about/why-our-website-builder";
     }
-    if (lower.includes('demo website') || lower.includes('demo-website')) {
-      return '#demo-websites';
+    if (lower.includes("demo website") || lower.includes("demo-website")) {
+      return "#demo-websites";
     }
-    
+
     const titleMap: Record<string, string> = {
-      'about': '#about',
-      'sales': '/become-our-partner',
-      'partner': '/become-our-partner',
-      'become': '/become-our-partner',
-      'pricing': '#pricing',
-      'contact': '#contact',
-      'testimonial': '#testimonials',
-      'review': '#testimonials',
-      'feature': '#features',
-      'faq': '#faq',
-      'question': '#faq',
-      'team': '#team',
-      'blog': '#blog',
-      'portfolio': '#portfolio',
-      'gallery': '#gallery',
-      'template': '#gallery',
-      'service': '#services',
-      'affiliate': '#affiliate',
+      about: "#about",
+      sales: "/become-a-partner",
+      partner: "/become-a-partner",
+      become: "/become-a-partner",
+      pricing: "#pricing",
+      contact: "#contact",
+      testimonial: "#testimonials",
+      review: "#testimonials",
+      feature: "#features",
+      faq: "#faq",
+      question: "#faq",
+      team: "#team",
+      blog: "#blog",
+      portfolio: "#portfolio",
+      gallery: "#gallery",
+      template: "#gallery",
+      service: "#services",
+      affiliate: "#affiliate",
     };
-    
+
     for (const [key, route] of Object.entries(titleMap)) {
       if (lower.includes(key)) return route;
     }
-    return '#';
+    return "#";
   };
 
   const processedLinks: NavigationItem[] = rawNavigationItems.map(
     (item: any) => {
       let url = item.url || "#";
-      
+
       // Priority 1: Use page meta type if available
       if (item.link_type === "page" && item.page?.meta?.type) {
         url = getRouteFromPageType(item.page.meta.type, item.page.meta.slug);
@@ -131,14 +134,14 @@ function GlassNavbar({ data, onShowLogin }: GlassNavbarProps) {
       else if (!url || url === "#") {
         url = getRouteFromTitle(item.title);
       }
-      
+
       return {
         ...item,
         link_type: (item.link_type as "page" | "url" | "dropdown") || "url",
         url: url,
         children: item.children || [],
       };
-    }
+    },
   );
 
   const links: NavigationItem[] =
@@ -208,8 +211,6 @@ function GlassNavbar({ data, onShowLogin }: GlassNavbarProps) {
   const stickyNavbar = headerConfig?.sticky_navbar !== false;
   const transparentOnHome = headerConfig?.transparent_on_home || false;
 
-
-
   function isFeatureDropdown(item: NavigationItem): boolean {
     return (
       item.link_type === "dropdown" &&
@@ -246,8 +247,8 @@ function GlassNavbar({ data, onShowLogin }: GlassNavbarProps) {
         scrolled
           ? "backdrop-blur-xl bg-theme-background/90 shadow-2xl border-b-2 border-theme-primary/30"
           : transparentOnHome
-          ? "bg-transparent"
-          : "backdrop-blur-md bg-theme-background/30 border-b border-theme-primary/20"
+            ? "bg-transparent"
+            : "backdrop-blur-md bg-theme-background/30 border-b border-theme-primary/20"
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -341,7 +342,7 @@ function GlassNavbar({ data, onShowLogin }: GlassNavbarProps) {
                                   if ((page as any).page_icon) {
                                     // Extract icon name from HTML tag like "<FaFileSignature />"
                                     const match = (page as any).page_icon.match(
-                                      /<(\w+)/
+                                      /<(\w+)/,
                                     );
                                     if (match && match[1]) {
                                       icon = match[1];
@@ -433,7 +434,7 @@ function GlassNavbar({ data, onShowLogin }: GlassNavbarProps) {
                         href={link.url || "#"}
                         onClick={(e) => {
                           const url = link.url || "#";
-                          if (url.startsWith('#')) {
+                          if (url.startsWith("#")) {
                             e.preventDefault();
                             window.location.hash = url.substring(1);
                           }
@@ -500,7 +501,7 @@ function GlassNavbar({ data, onShowLogin }: GlassNavbarProps) {
                       <button
                         onClick={() =>
                           setActiveDropdown(
-                            activeDropdown === link.id ? null : link.id
+                            activeDropdown === link.id ? null : link.id,
                           )
                         }
                         className="w-full flex items-center justify-between text-base font-semibold py-2 px-2 transition-all duration-300 hover:scale-105 relative text-theme-text"
@@ -545,7 +546,7 @@ function GlassNavbar({ data, onShowLogin }: GlassNavbarProps) {
                       <button
                         onClick={() =>
                           setActiveDropdown(
-                            activeDropdown === link.id ? null : link.id
+                            activeDropdown === link.id ? null : link.id,
                           )
                         }
                         className="w-full flex items-center justify-between text-base font-medium py-2 px-2 hover:text-blue-600 transition-colors text-theme-text"
@@ -580,7 +581,7 @@ function GlassNavbar({ data, onShowLogin }: GlassNavbarProps) {
                       href={link.url || "#"}
                       onClick={(e) => {
                         const url = link.url || "#";
-                        if (url.startsWith('#')) {
+                        if (url.startsWith("#")) {
                           e.preventDefault();
                           window.location.hash = url.substring(1);
                         }

@@ -7,6 +7,11 @@ export const DynamicHead: React.FC = () => {
   useEffect(() => {
     if (loading) return;
 
+    // Update title
+    if (settings.siteTitle) {
+      document.title = settings.siteTitle;
+    }
+
     // Update favicon
     if (settings.favicon) {
       const existingFavicon = document.querySelector('link[rel="icon"]') as HTMLLinkElement;
@@ -21,28 +26,7 @@ export const DynamicHead: React.FC = () => {
         document.head.appendChild(newFavicon);
       }
     }
-
-    // Update title
-    if (settings.siteTitle) {
-      document.title = settings.siteTitle;
-    }
   }, [settings, loading]);
 
-  // Force update on route changes
-  useEffect(() => {
-    const updateHead = () => {
-      if (loading || !settings.siteTitle) return;
-      document.title = settings.siteTitle;
-    };
-
-    window.addEventListener('popstate', updateHead);
-    window.addEventListener('hashchange', updateHead);
-
-    return () => {
-      window.removeEventListener('popstate', updateHead);
-      window.removeEventListener('hashchange', updateHead);
-    };
-  }, [settings.siteTitle, loading]);
-
-  return null; // This component doesn't render anything
+  return null;
 };

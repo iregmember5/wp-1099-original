@@ -7,10 +7,10 @@ const LandingPage = lazy(() => import("./pages/LandingPage"));
 const FeaturesPage = lazy(() =>
   import("./components/features/features-page/FeaturesPage").then((m) => ({
     default: m.FeaturesPage,
-  }))
+  })),
 );
 const BlogPage = lazy(() =>
-  import("./components/blogs/BlogPage").then((m) => ({ default: m.BlogPage }))
+  import("./components/blogs/BlogPage").then((m) => ({ default: m.BlogPage })),
 );
 const AboutPage = lazy(() => import("./pages/AboutPage"));
 const DebugFeaturesAPI = lazy(() => import("./pages/DebugFeaturesApi"));
@@ -18,11 +18,11 @@ const DebugLandingAPI = lazy(() => import("./pages/DebugLandingApi"));
 const Maverick = lazy(() => import("./components/salespage/Maverick"));
 const ImageGallery = lazy(() => import("./components/gallery/ImageGallery"));
 const AffiliateDashboard = lazy(
-  () => import("./components/landingpage/AffiliateDashboard")
+  () => import("./components/landingpage/AffiliateDashboard"),
 );
 const TeamPage = lazy(() => import("./components/teams/TeamPage"));
 const InformationPage = lazy(
-  () => import("./components/information-page/InformationPage")
+  () => import("./components/information-page/InformationPage"),
 );
 
 // Loading component
@@ -128,7 +128,11 @@ function AppContent() {
         return;
       }
 
-      if (path.includes("/become-our-partner") || path.includes("/salespage") || hash.includes("#salespage")) {
+      if (
+        path.includes("/become-a-partner") ||
+        path.includes("/salespage") ||
+        hash.includes("#salespage")
+      ) {
         setCurrentView({ type: "salespage" });
         return;
       }
