@@ -28,5 +28,21 @@ export const DynamicHead: React.FC = () => {
     }
   }, [settings, loading]);
 
+  // Force update on route changes
+  useEffect(() => {
+    const updateHead = () => {
+      if (loading || !settings.siteTitle) return;
+      document.title = settings.siteTitle;
+    };
+
+    window.addEventListener('popstate', updateHead);
+    window.addEventListener('hashchange', updateHead);
+
+    return () => {
+      window.removeEventListener('popstate', updateHead);
+      window.removeEventListener('hashchange', updateHead);
+    };
+  }, [settings.siteTitle, loading]);
+
   return null; // This component doesn't render anything
 };
