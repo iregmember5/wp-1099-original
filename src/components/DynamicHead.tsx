@@ -12,10 +12,11 @@ export const DynamicHead: React.FC = () => {
       const existingFavicon = document.querySelector('link[rel="icon"]') as HTMLLinkElement;
       if (existingFavicon) {
         existingFavicon.href = settings.favicon;
+        existingFavicon.type = settings.favicon.startsWith('data:') ? 'image/svg+xml' : 'image/x-icon';
       } else {
         const newFavicon = document.createElement('link');
         newFavicon.rel = 'icon';
-        newFavicon.type = 'image/svg+xml';
+        newFavicon.type = settings.favicon.startsWith('data:') ? 'image/svg+xml' : 'image/x-icon';
         newFavicon.href = settings.favicon;
         document.head.appendChild(newFavicon);
       }

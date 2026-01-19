@@ -42,9 +42,13 @@ export const SiteSettingsProvider: React.FC<SiteSettingsProviderProps> = ({
         const data: SiteSettingsResponse = await response.json();
 
         // Transform API response to our internal format
+        const faviconUrl = data.favicon?.url 
+          ? (data.favicon.url.startsWith('http') ? data.favicon.url : `https://esign-admin.signmary.com${data.favicon.url}`)
+          : "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>📄</text></svg>";
+        
         const transformedSettings: SiteSettings = {
           siteTitle: data.site_title || "WP-1099",
-          favicon: data.favicon?.url || "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>📄</text></svg>",
+          favicon: faviconUrl,
           widgets: data.widgets || [],
         };
 
