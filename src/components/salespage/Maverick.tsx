@@ -69,7 +69,10 @@ export default function TaxAdvisorLandingPage() {
   if (loading) {
     return (
       <div className="geometric-bg text-white fixed inset-0 w-screen h-screen flex items-center justify-center">
-        <div className="text-2xl">Loading...</div>
+        <div className="flex flex-col items-center gap-4">
+          <div className="w-16 h-16 border-4 border-yellow-400 border-t-transparent rounded-full animate-spin"></div>
+          <div className="text-xl font-bold text-yellow-400">Loading...</div>
+        </div>
       </div>
     );
   }

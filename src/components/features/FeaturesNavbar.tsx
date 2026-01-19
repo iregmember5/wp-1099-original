@@ -25,13 +25,13 @@ export const FeaturesNavbar: React.FC<FeaturesNavbarProps> = ({ currentSlug, the
         </a>
         
         <div style={{ display: "flex", gap: "1.5rem" }} className="desktop-nav">
-          <a href="/become-our-partner" style={{ color: theme.textColor, textDecoration: "none", fontSize: "0.9rem" }}>
+          <a href="/become-our-partner" style={{ color: theme.textColor, textDecoration: "none", fontSize: "0.9rem", fontWeight: "bold", position: "relative" }} onMouseEnter={(e) => e.currentTarget.style.textDecoration = "underline"} onMouseLeave={(e) => e.currentTarget.style.textDecoration = "none"}>
             Become a Partner
           </a>
-          <a href="#about" style={{ color: theme.textColor, textDecoration: "none", fontSize: "0.9rem" }}>
+          <a href="#about" style={{ color: theme.textColor, textDecoration: "none", fontSize: "0.9rem", fontWeight: "bold", position: "relative" }} onMouseEnter={(e) => e.currentTarget.style.textDecoration = "underline"} onMouseLeave={(e) => e.currentTarget.style.textDecoration = "none"}>
             About
           </a>
-          <a href="#demo-websites" style={{ color: theme.textColor, textDecoration: "none", fontSize: "0.9rem" }}>
+          <a href="#demo-websites" style={{ color: theme.textColor, textDecoration: "none", fontSize: "0.9rem", fontWeight: "bold", position: "relative" }} onMouseEnter={(e) => e.currentTarget.style.textDecoration = "underline"} onMouseLeave={(e) => e.currentTarget.style.textDecoration = "none"}>
             Demo Websites
           </a>
         </div>

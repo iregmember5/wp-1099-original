@@ -43,8 +43,8 @@ export const SiteSettingsProvider: React.FC<SiteSettingsProviderProps> = ({
 
         // Transform API response to our internal format
         const transformedSettings: SiteSettings = {
-          siteTitle: data.site_title || "notary-app",
-          favicon: data.favicon?.url || "/vite.svg",
+          siteTitle: data.site_title || "WP-1099",
+          favicon: data.favicon?.url || "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>📄</text></svg>",
           widgets: data.widgets || [],
         };
 
@@ -53,8 +53,8 @@ export const SiteSettingsProvider: React.FC<SiteSettingsProviderProps> = ({
         setError(err instanceof Error ? err.message : "Unknown error");
         // Fallback to default values
         setSettings({
-          siteTitle: "notary-app",
-          favicon: "/vite.svg",
+          siteTitle: "WP-1099",
+          favicon: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>📄</text></svg>",
           widgets: [],
         });
       } finally {
