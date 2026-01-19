@@ -47,9 +47,30 @@ export default function TaxAdvisorLandingPage() {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [pageData, setPageData] = useState<SalesPages | null>(null);
   const [showWebForm, setShowWebForm] = useState(false);
+  const [webformPageData, setWebformPageData] = useState<any>(null);
 
   const [_, setFeaturesData] = useState<FeaturesPageData[]>([]);
   const [loading, setLoading] = useState(true);
+
+  const handleOpenWebForm = async () => {
+    try {
+      const response = await fetch(
+        'https://esign-admin.signmary.com/blogs/api/v2/webform-pages/',
+        {
+          headers: {
+            'X-Frontend-Url': 'https://wp-1099.com',
+          },
+        }
+      );
+      const data = await response.json();
+      if (data.items && data.items.length > 0) {
+        setWebformPageData(data.items[0]);
+        setShowWebForm(true);
+      }
+    } catch (error) {
+      console.error('Error fetching webform:', error);
+    }
+  };
 
   useEffect(() => {
     Promise.all([
@@ -116,7 +137,7 @@ export default function TaxAdvisorLandingPage() {
               </p>
               {pageData.header_section.button?.text && (
                 <button
-                  onClick={() => setShowWebForm(true)}
+                  onClick={handleOpenWebForm}
                   className="bg-black hover:bg-gray-900 text-yellow-400 px-6 py-2.5 rounded-full text-xs sm:text-sm flex items-center gap-2 whitespace-nowrap font-bold shadow-xl hover:scale-105 transition-all"
                 >
                   <svg
@@ -168,7 +189,7 @@ export default function TaxAdvisorLandingPage() {
 
                 {pageData?.main_hero_section?.button?.text && (
                   <button
-                    onClick={() => setShowWebForm(true)}
+                    onClick={handleOpenWebForm}
                     className="bg-gradient-to-r from-yellow-400 via-orange-500 to-yellow-400 text-black font-black py-5 px-10 rounded-full text-xl hover:scale-110 transition-all shadow-2xl hover:shadow-yellow-500/50 animate-[glow_2s_ease-in-out_infinite]"
                   >
                     🎯 {pageData.main_hero_section.button.text}
@@ -309,7 +330,7 @@ export default function TaxAdvisorLandingPage() {
                 )}
                 {pageData.secondary_cta_section.button?.text && (
                   <button
-                    onClick={() => setShowWebForm(true)}
+                    onClick={handleOpenWebForm}
                     className="bg-gradient-to-r from-yellow-400 to-orange-500 text-black font-black py-5 px-12 rounded-full text-xl hover:scale-105 transition-transform shadow-2xl"
                   >
                     {pageData.secondary_cta_section.button.text} →
@@ -380,7 +401,7 @@ export default function TaxAdvisorLandingPage() {
                   )}
                   {pageData.primary_cta_section.button?.text && (
                     <button
-                      onClick={() => setShowWebForm(true)}
+                      onClick={handleOpenWebForm}
                       className="w-full bg-gradient-to-r from-yellow-400 to-orange-500 text-black font-black py-5 rounded-full text-lg hover:scale-105 transition-transform shadow-xl"
                     >
                       {pageData.primary_cta_section.button.text}
@@ -480,7 +501,7 @@ export default function TaxAdvisorLandingPage() {
                   {section.button?.text && (
                     <div className="text-center mt-16">
                       <button
-                        onClick={() => setShowWebForm(true)}
+                        onClick={handleOpenWebForm}
                         className="group relative bg-gradient-to-r from-yellow-400 via-orange-500 to-yellow-400 text-black font-black py-5 px-12 rounded-full text-xl hover:scale-105 transition-all shadow-2xl overflow-hidden"
                       >
                         <span className="relative z-10">
@@ -510,7 +531,7 @@ export default function TaxAdvisorLandingPage() {
               {cta.description && <p className="mb-4">{cta.description}</p>}
               {cta.button?.text && (
                 <button
-                  onClick={() => setShowWebForm(true)}
+                  onClick={handleOpenWebForm}
                   className="bg-gradient-to-r from-yellow-500 to-orange-500 text-black font-bold py-4 px-8 rounded-full text-lg hover:scale-105 transition-transform"
                 >
                   🎯 {cta.button.text}
@@ -534,7 +555,7 @@ export default function TaxAdvisorLandingPage() {
             )}
             <div className="max-w-2xl mx-auto text-center">
               <button
-                onClick={() => setShowWebForm(true)}
+                onClick={handleOpenWebForm}
                 className="bg-gradient-to-r from-yellow-400 to-orange-500 text-black font-black py-5 px-12 rounded-full text-xl hover:scale-105 transition-transform shadow-2xl"
               >
                 {pageData.web_form_section.form.form_title || "Apply Now"}
@@ -606,12 +627,12 @@ export default function TaxAdvisorLandingPage() {
           )}
       </div>
 
-      {pageData?.web_form_section && (
+      {webformPageData?.web_form_section && (
         <WebForm
           isOpen={showWebForm}
           onClose={() => setShowWebForm(false)}
-          data={pageData.web_form_section}
-          pageId={pageData.page_id || pageData.id}
+          data={webformPageData.web_form_section}
+          webformPageId={webformPageData.id}
         />
       )}
     </>

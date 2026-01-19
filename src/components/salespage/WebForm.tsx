@@ -31,6 +31,7 @@ interface WebFormProps {
   onClose: () => void;
   data: WebFormData;
   pageId?: number;
+  webformPageId?: number;
 }
 
 const countries = [
@@ -86,7 +87,12 @@ const countries = [
   { code: "+61", name: "AU", flag: "AU" },
 ];
 
-const WebForm: React.FC<WebFormProps> = ({ isOpen, onClose, data, pageId }) => {
+const WebForm: React.FC<WebFormProps> = ({
+  isOpen,
+  onClose,
+  data,
+  webformPageId,
+}) => {
   const [formData, setFormData] = useState<Record<string, any>>({});
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -125,10 +131,6 @@ const WebForm: React.FC<WebFormProps> = ({ isOpen, onClose, data, pageId }) => {
         value: formData[field.id] ?? "",
       }));
 
-      // Hardcoded page ID as 139 based on database record
-      const finalPageId = 139;
-
-      // Get CSRF token from cookie
       const getCookie = (name: string) => {
         const value = `; ${document.cookie}`;
         const parts = value.split(`; ${name}=`);
@@ -138,7 +140,6 @@ const WebForm: React.FC<WebFormProps> = ({ isOpen, onClose, data, pageId }) => {
 
       const csrftoken = getCookie("csrftoken");
 
-      // Using sales page specific endpoint for form submission
       const response = await fetch(
         "https://esign-admin.signmary.com/blogs/api/v2/submit-form/",
         {
@@ -151,7 +152,7 @@ const WebForm: React.FC<WebFormProps> = ({ isOpen, onClose, data, pageId }) => {
           credentials: "include",
           body: JSON.stringify({
             form_id: data.form.id,
-            page_id: finalPageId,
+            webform_page_id: webformPageId,
             submission_data,
           }),
         },
