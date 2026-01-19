@@ -114,6 +114,12 @@ const WebForm: React.FC<WebFormProps> = ({
       if (field.required && !formData[field.id]) {
         newErrors[field.id] = "This field is required";
       }
+      if (field.field_type === "email" && formData[field.id]) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(formData[field.id])) {
+          newErrors[field.id] = "Please enter a valid email address";
+        }
+      }
     });
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -511,6 +517,7 @@ const WebForm: React.FC<WebFormProps> = ({
                       >
                         <label className="block text-sm font-normal text-gray-700 mb-4">
                           {field.label}
+                          {field.required && <span className="text-red-600 ml-1">*</span>}
                         </label>
                         {renderField(field)}
                         {errors[field.id] && (

@@ -48,11 +48,13 @@ export default function TaxAdvisorLandingPage() {
   const [pageData, setPageData] = useState<SalesPages | null>(null);
   const [showWebForm, setShowWebForm] = useState(false);
   const [webformPageData, setWebformPageData] = useState<any>(null);
+  const [isLoadingWebForm, setIsLoadingWebForm] = useState(false);
 
   const [_, setFeaturesData] = useState<FeaturesPageData[]>([]);
   const [loading, setLoading] = useState(true);
 
   const handleOpenWebForm = async () => {
+    setIsLoadingWebForm(true);
     try {
       const response = await fetch(
         'https://esign-admin.signmary.com/blogs/api/v2/webform-pages/',
@@ -75,6 +77,8 @@ export default function TaxAdvisorLandingPage() {
       }
     } catch (error) {
       console.error('Error fetching webform:', error);
+    } finally {
+      setIsLoadingWebForm(false);
     }
   };
 
@@ -144,8 +148,19 @@ export default function TaxAdvisorLandingPage() {
               {pageData.header_section.button?.text && (
                 <button
                   onClick={handleOpenWebForm}
-                  className="bg-black hover:bg-gray-900 text-yellow-400 px-6 py-2.5 rounded-full text-xs sm:text-sm flex items-center gap-2 whitespace-nowrap font-bold shadow-xl hover:scale-105 transition-all"
+                  disabled={isLoadingWebForm}
+                  className="bg-black hover:bg-gray-900 text-yellow-400 px-6 py-2.5 rounded-full text-xs sm:text-sm flex items-center gap-2 whitespace-nowrap font-bold shadow-xl hover:scale-105 transition-all disabled:opacity-50"
                 >
+                  {isLoadingWebForm ? (
+                    <>
+                      <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                      </svg>
+                      Loading...
+                    </>
+                  ) : (
+                    <>
                   <svg
                     className="w-4 h-4"
                     fill="currentColor"
@@ -153,7 +168,9 @@ export default function TaxAdvisorLandingPage() {
                   >
                     <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z" />
                   </svg>
-                  {pageData.header_section.button.text}
+                      {pageData.header_section.button.text}
+                    </>
+                  )}
                 </button>
               )}
             </div>
@@ -196,9 +213,20 @@ export default function TaxAdvisorLandingPage() {
                 {pageData?.main_hero_section?.button?.text && (
                   <button
                     onClick={handleOpenWebForm}
-                    className="bg-gradient-to-r from-yellow-400 via-orange-500 to-yellow-400 text-black font-black py-5 px-10 rounded-full text-xl hover:scale-110 transition-all shadow-2xl hover:shadow-yellow-500/50 animate-[glow_2s_ease-in-out_infinite]"
+                    disabled={isLoadingWebForm}
+                    className="bg-gradient-to-r from-yellow-400 via-orange-500 to-yellow-400 text-black font-black py-5 px-10 rounded-full text-xl hover:scale-110 transition-all shadow-2xl hover:shadow-yellow-500/50 animate-[glow_2s_ease-in-out_infinite] disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    🎯 {pageData.main_hero_section.button.text}
+                    {isLoadingWebForm ? (
+                      <span className="flex items-center gap-2">
+                        <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                        </svg>
+                        Loading...
+                      </span>
+                    ) : (
+                      <>🎯 {pageData.main_hero_section.button.text}</>
+                    )}
                   </button>
                 )}
               </div>
@@ -337,9 +365,10 @@ export default function TaxAdvisorLandingPage() {
                 {pageData.secondary_cta_section.button?.text && (
                   <button
                     onClick={handleOpenWebForm}
-                    className="bg-gradient-to-r from-yellow-400 to-orange-500 text-black font-black py-5 px-12 rounded-full text-xl hover:scale-105 transition-transform shadow-2xl"
+                    disabled={isLoadingWebForm}
+                    className="bg-gradient-to-r from-yellow-400 to-orange-500 text-black font-black py-5 px-12 rounded-full text-xl hover:scale-105 transition-transform shadow-2xl disabled:opacity-50"
                   >
-                    {pageData.secondary_cta_section.button.text} →
+                    {isLoadingWebForm ? 'Loading...' : `${pageData.secondary_cta_section.button.text} →`}
                   </button>
                 )}
               </div>
@@ -408,9 +437,10 @@ export default function TaxAdvisorLandingPage() {
                   {pageData.primary_cta_section.button?.text && (
                     <button
                       onClick={handleOpenWebForm}
-                      className="w-full bg-gradient-to-r from-yellow-400 to-orange-500 text-black font-black py-5 rounded-full text-lg hover:scale-105 transition-transform shadow-xl"
+                      disabled={isLoadingWebForm}
+                      className="w-full bg-gradient-to-r from-yellow-400 to-orange-500 text-black font-black py-5 rounded-full text-lg hover:scale-105 transition-transform shadow-xl disabled:opacity-50"
                     >
-                      {pageData.primary_cta_section.button.text}
+                      {isLoadingWebForm ? 'Loading...' : pageData.primary_cta_section.button.text}
                     </button>
                   )}
                 </div>
@@ -508,10 +538,11 @@ export default function TaxAdvisorLandingPage() {
                     <div className="text-center mt-16">
                       <button
                         onClick={handleOpenWebForm}
-                        className="group relative bg-gradient-to-r from-yellow-400 via-orange-500 to-yellow-400 text-black font-black py-5 px-12 rounded-full text-xl hover:scale-105 transition-all shadow-2xl overflow-hidden"
+                        disabled={isLoadingWebForm}
+                        className="group relative bg-gradient-to-r from-yellow-400 via-orange-500 to-yellow-400 text-black font-black py-5 px-12 rounded-full text-xl hover:scale-105 transition-all shadow-2xl overflow-hidden disabled:opacity-50"
                       >
                         <span className="relative z-10">
-                          {section.button.text} →
+                          {isLoadingWebForm ? 'Loading...' : `${section.button.text} →`}
                         </span>
                         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000" />
                       </button>
@@ -538,9 +569,10 @@ export default function TaxAdvisorLandingPage() {
               {cta.button?.text && (
                 <button
                   onClick={handleOpenWebForm}
-                  className="bg-gradient-to-r from-yellow-500 to-orange-500 text-black font-bold py-4 px-8 rounded-full text-lg hover:scale-105 transition-transform"
+                  disabled={isLoadingWebForm}
+                  className="bg-gradient-to-r from-yellow-500 to-orange-500 text-black font-bold py-4 px-8 rounded-full text-lg hover:scale-105 transition-transform disabled:opacity-50"
                 >
-                  🎯 {cta.button.text}
+                  {isLoadingWebForm ? 'Loading...' : `🎯 ${cta.button.text}`}
                 </button>
               )}
             </div>
@@ -562,9 +594,10 @@ export default function TaxAdvisorLandingPage() {
             <div className="max-w-2xl mx-auto text-center">
               <button
                 onClick={handleOpenWebForm}
-                className="bg-gradient-to-r from-yellow-400 to-orange-500 text-black font-black py-5 px-12 rounded-full text-xl hover:scale-105 transition-transform shadow-2xl"
+                disabled={isLoadingWebForm}
+                className="bg-gradient-to-r from-yellow-400 to-orange-500 text-black font-black py-5 px-12 rounded-full text-xl hover:scale-105 transition-transform shadow-2xl disabled:opacity-50"
               >
-                {pageData.web_form_section.form.form_title || "Apply Now"}
+                {isLoadingWebForm ? 'Loading...' : (pageData.web_form_section.form.form_title || "Apply Now")}
               </button>
             </div>
           </div>
