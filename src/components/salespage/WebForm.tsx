@@ -93,17 +93,9 @@ const WebForm: React.FC<WebFormProps> = ({ isOpen, onClose, data, pageId }) => {
   const [showSuccess, setShowSuccess] = useState(false);
   const [countryCode, setCountryCode] = useState("+1");
   const [showCountryDropdown, setShowCountryDropdown] = useState(false);
-  const [showOtherInput, setShowOtherInput] = useState<Record<number, boolean>>({});
-
-  // Fetch CSRF token when form opens
-  React.useEffect(() => {
-    if (isOpen) {
-      fetch('https://esign-admin.signmary.com/blogs/api/v2/sales-pages/submit-form/', {
-        method: 'GET',
-        credentials: 'include',
-      }).catch(() => {});
-    }
-  }, [isOpen]);
+  const [showOtherInput, setShowOtherInput] = useState<Record<number, boolean>>(
+    {},
+  );
 
   const handleChange = (fieldId: number, value: any) => {
     setFormData((prev) => ({ ...prev, [fieldId]: value }));
@@ -133,37 +125,36 @@ const WebForm: React.FC<WebFormProps> = ({ isOpen, onClose, data, pageId }) => {
         value: formData[field.id] ?? "",
       }));
 
+      // Hardcoded page ID as 139 based on database record
+      const finalPageId = 139;
+
       // Get CSRF token from cookie
       const getCookie = (name: string) => {
         const value = `; ${document.cookie}`;
         const parts = value.split(`; ${name}=`);
-        if (parts.length === 2) return parts.pop()?.split(';').shift();
+        if (parts.length === 2) return parts.pop()?.split(";").shift();
         return null;
       };
 
-      const csrftoken = getCookie('csrftoken');
-      
-      if (!csrftoken) {
-        console.error('CSRF token not found');
-        return;
-      }
+      const csrftoken = getCookie("csrftoken");
 
       // Using sales page specific endpoint for form submission
       const response = await fetch(
-        "https://esign-admin.signmary.com/blogs/api/v2/sales-pages/submit-form/",
+        "https://esign-admin.signmary.com/blogs/api/v2/submit-form/",
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            "X-CSRFToken": csrftoken,
             "X-Frontend-Url": "https://wp-1099.com",
+            ...(csrftoken && { "X-CSRFToken": csrftoken }),
           },
-          credentials: 'include',
-          body: JSON.stringify({ 
+          credentials: "include",
+          body: JSON.stringify({
             form_id: data.form.id,
-            submission_data 
+            page_id: finalPageId,
+            submission_data,
           }),
-        }
+        },
       );
 
       if (response.ok) {
@@ -190,8 +181,8 @@ const WebForm: React.FC<WebFormProps> = ({ isOpen, onClose, data, pageId }) => {
 
     switch (field.field_type) {
       case "text":
-        const isPhoneField = field.label.toLowerCase().includes('phone');
-        
+        const isPhoneField = field.label.toLowerCase().includes("phone");
+
         if (isPhoneField) {
           return (
             <div className="flex items-center gap-2 border-b border-gray-300 focus-within:border-purple-600 transition-colors">
@@ -258,7 +249,7 @@ const WebForm: React.FC<WebFormProps> = ({ isOpen, onClose, data, pageId }) => {
             </div>
           );
         }
-        
+
         return (
           <input
             type="text"
@@ -398,24 +389,30 @@ const WebForm: React.FC<WebFormProps> = ({ isOpen, onClose, data, pageId }) => {
                             ? [...current, choice]
                             : current.filter((c: string) => c !== choice);
                           handleChange(field.id, updated);
-                          
-                          if (choice.toLowerCase().includes('other')) {
-                            setShowOtherInput(prev => ({ ...prev, [field.id]: e.target.checked }));
+
+                          if (choice.toLowerCase().includes("other")) {
+                            setShowOtherInput((prev) => ({
+                              ...prev,
+                              [field.id]: e.target.checked,
+                            }));
                           }
                         }}
                         className="w-5 h-5 text-purple-600 border-gray-400 rounded focus:ring-purple-600 cursor-pointer mt-0.5"
                       />
                       <span className="text-sm text-gray-700">{choice}</span>
                     </label>
-                    {choice.toLowerCase().includes('other') && showOtherInput[field.id] && (
-                      <input
-                        type="text"
-                        placeholder="Please specify"
-                        value={formData[`${field.id}_other`] || ""}
-                        onChange={(e) => handleChange(`${field.id}_other`, e.target.value)}
-                        className="w-full mt-2 ml-8 px-3 py-2 border border-gray-300 rounded focus:border-purple-600 outline-none text-sm"
-                      />
-                    )}
+                    {choice.toLowerCase().includes("other") &&
+                      showOtherInput[field.id] && (
+                        <input
+                          type="text"
+                          placeholder="Please specify"
+                          value={formData[`${field.id}_other`] || ""}
+                          onChange={(e) =>
+                            handleChange(`${field.id}_other`, e.target.value)
+                          }
+                          className="w-full mt-2 ml-8 px-3 py-2 border border-gray-300 rounded focus:border-purple-600 outline-none text-sm"
+                        />
+                      )}
                   </div>
                 ))}
               </>
@@ -475,10 +472,7 @@ const WebForm: React.FC<WebFormProps> = ({ isOpen, onClose, data, pageId }) => {
               onClick={onClose}
               className="absolute top-4 right-4 z-10 p-2 hover:bg-gray-100 rounded-full transition-colors"
             >
-              <EasyIcon
-                iconPath="feather/FiX"
-                className="w-5 h-5 text-white"
-              />
+              <EasyIcon iconPath="feather/FiX" className="w-5 h-5 text-white" />
             </button>
 
             {showSuccess ? (
