@@ -10,6 +10,7 @@ import { W9ChaserBenefits } from "./w9-chaser/W9ChaserBenefits";
 import { W9ChaserFeatures } from "./w9-chaser/W9ChaserFeatures";
 import { W9ChaserFAQ } from "./w9-chaser/W9ChaserFAQ";
 import { W9ChaserCTA } from "./w9-chaser/W9ChaserCTA";
+import { W9ChaserFooter } from "./w9-chaser/W9ChaserFooter";
 import { DynamicContentRenderer } from "../dynamic-content/DynamicContentRenderer";
 
 interface LayoutProps {
@@ -98,5 +99,6 @@ export const W9ChaserLayout: React.FC<LayoutProps> = ({ data, theme }) => (
           backgroundImage={cta.background_image}
         />
       ))}
+    <W9ChaserFooter data={data} />
   </>
 );
