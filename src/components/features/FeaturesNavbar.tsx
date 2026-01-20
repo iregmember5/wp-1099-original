@@ -45,8 +45,7 @@ export const FeaturesNavbar: React.FC<FeaturesNavbarProps> = ({
             textDecoration: "none",
           }}
         >
-          <span>📄</span>
-          <span>WP-1099</span>
+          <img src="/wp-1099.png" alt="WP-1099" style={{ height: "40px" }} />
         </a>
 
         <div style={{ display: "flex", gap: "1.5rem" }} className="desktop-nav">
