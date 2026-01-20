@@ -43,41 +43,69 @@ export function W9ChaserPrivacyPolicy() {
     );
 
   return (
-    <div style={{ 
-      maxWidth: "900px", 
-      margin: "0 auto", 
-      padding: "3rem 2rem",
-      fontFamily: "system-ui, -apple-system, sans-serif"
-    }}>
-      <h1 style={{ 
-        fontSize: "2.5rem", 
-        marginBottom: "0.5rem",
-        color: "#1a1a1a",
-        fontWeight: "700"
+    <div style={{ fontFamily: "system-ui, -apple-system, sans-serif", margin: 0 }}>
+      <div style={{
+        backgroundImage: "linear-gradient(rgba(30, 41, 38, 0.7), rgba(30, 41, 38, 0.7)), url(/wp-1099.png)",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        minHeight: "500px",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        color: "white",
+        padding: "4rem 2rem"
       }}>
-        {data.title}
-      </h1>
-      {data.subtitle && (
-        <h2 style={{ 
-          fontSize: "1.25rem", 
-          color: "#666", 
-          marginBottom: "2rem", 
+        <p style={{ 
+          fontSize: "0.85rem", 
+          letterSpacing: "3px", 
+          marginBottom: "1.5rem", 
+          textTransform: "uppercase",
           fontWeight: "400",
-          borderBottom: "2px solid #e5e7eb",
-          paddingBottom: "1rem"
+          opacity: 0.9
         }}>
-          {data.subtitle}
-        </h2>
-      )}
-      <div 
-        style={{ 
-          color: "#374151", 
-          fontSize: "1.05rem", 
-          lineHeight: "1.8"
-        }}
-        dangerouslySetInnerHTML={{ __html: data.description }}
-      />
+          UNDERSTANDING OUR
+        </p>
+        <h1 style={{ 
+          fontSize: "5rem", 
+          fontWeight: "700", 
+          margin: 0, 
+          lineHeight: 1.1,
+          textAlign: "center",
+          maxWidth: "800px"
+        }}>
+          Privacy<br/>Policy
+        </h1>
+      </div>
+      
+      <div style={{ 
+        maxWidth: "900px", 
+        margin: "0 auto", 
+        padding: "4rem 2rem",
+        backgroundColor: "#ffffff"
+      }}>
+        {data.subtitle && (
+          <h2 style={{ 
+            fontSize: "1.5rem", 
+            color: "#1a1a1a", 
+            marginBottom: "2rem", 
+            fontWeight: "600"
+          }}>
+            {data.subtitle}
+          </h2>
+        )}
+        <div 
+          style={{ 
+            color: "#374151", 
+            fontSize: "1.05rem", 
+            lineHeight: "1.8"
+          }}
+          dangerouslySetInnerHTML={{ __html: data.description }}
+        />
+      </div>
+      
       <style>{`
+        body { margin: 0; background: #ffffff; }
         h3 { 
           font-size: 1.5rem; 
           color: #1f2937; 
