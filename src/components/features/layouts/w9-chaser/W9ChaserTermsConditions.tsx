@@ -43,42 +43,46 @@ export function W9ChaserTermsConditions() {
     );
 
   return (
-    <div style={{ fontFamily: "system-ui, -apple-system, sans-serif" }}>
+    <div style={{ fontFamily: "system-ui, -apple-system, sans-serif", margin: 0 }}>
       <div style={{
-        backgroundImage: "url(/wp-1099.png)",
+        backgroundImage: "linear-gradient(rgba(30, 41, 38, 0.7), rgba(30, 41, 38, 0.7)), url(/wp-1099.png)",
         backgroundSize: "cover",
         backgroundPosition: "center",
-        height: "400px",
+        minHeight: "500px",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
         color: "white",
-        position: "relative"
+        padding: "4rem 2rem"
       }}>
-        <div style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          backgroundColor: "rgba(0, 0, 0, 0.5)"
-        }} />
-        <div style={{ position: "relative", textAlign: "center", zIndex: 1 }}>
-          <p style={{ fontSize: "0.9rem", letterSpacing: "2px", marginBottom: "1rem", textTransform: "uppercase" }}>
-            UNDERSTANDING OUR
-          </p>
-          <h1 style={{ fontSize: "4rem", fontWeight: "700", margin: 0, lineHeight: 1.2 }}>
-            {data.title}
-          </h1>
-        </div>
+        <p style={{ 
+          fontSize: "0.85rem", 
+          letterSpacing: "3px", 
+          marginBottom: "1.5rem", 
+          textTransform: "uppercase",
+          fontWeight: "400",
+          opacity: 0.9
+        }}>
+          UNDERSTANDING OUR
+        </p>
+        <h1 style={{ 
+          fontSize: "5rem", 
+          fontWeight: "700", 
+          margin: 0, 
+          lineHeight: 1.1,
+          textAlign: "center",
+          maxWidth: "800px"
+        }}>
+          Terms &<br/>Conditions
+        </h1>
       </div>
       
       <div style={{ 
         maxWidth: "900px", 
         margin: "0 auto", 
         padding: "4rem 2rem",
-        backgroundColor: "#f9fafb"
+        backgroundColor: "#ffffff"
       }}>
         {data.subtitle && (
           <h2 style={{ 
@@ -101,7 +105,7 @@ export function W9ChaserTermsConditions() {
       </div>
       
       <style>{`
-        body { margin: 0; background: #f9fafb; }
+        body { margin: 0; background: #ffffff; }
         h3 { 
           font-size: 1.5rem; 
           color: #1f2937; 
