@@ -17,7 +17,7 @@ export function W9ChaserPrivacyPolicy() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`${baseApiUrl}/privacy-policy-pages/?slug=w9-1099-chaser`, {
+    fetch(`${baseApiUrl}/privacy-policy-pages/`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

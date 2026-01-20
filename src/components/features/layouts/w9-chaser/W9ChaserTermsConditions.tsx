@@ -17,7 +17,7 @@ export function W9ChaserTermsConditions() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`${baseApiUrl}/terms-conditions-pages/?slug=w9-1099-chaser`, {
+    fetch(`${baseApiUrl}/terms-conditions-pages/`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
