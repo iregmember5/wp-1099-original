@@ -10,6 +10,7 @@ import { W9ChaserBenefits } from "./w9-chaser/W9ChaserBenefits";
 import { W9ChaserFeatures } from "./w9-chaser/W9ChaserFeatures";
 import { W9ChaserFAQ } from "./w9-chaser/W9ChaserFAQ";
 import { W9ChaserCTA } from "./w9-chaser/W9ChaserCTA";
+import { W9ChaserPricing } from "./w9-chaser/W9ChaserPricing";
 import { W9ChaserFooter } from "./w9-chaser/W9ChaserFooter";
 import { DynamicContentRenderer } from "../dynamic-content/DynamicContentRenderer";
 
@@ -87,6 +88,7 @@ export const W9ChaserLayout: React.FC<LayoutProps> = ({ data, theme }) => (
         description={data.faq_section_description}
       />
     )}
+    {data.pricing_widget_code && <W9ChaserPricing data={data} />}
     {data.primary_cta_sections &&
       data.primary_cta_sections.length > 0 &&
       data.primary_cta_sections.map((cta: any, i: number) => (
