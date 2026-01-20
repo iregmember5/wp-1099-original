@@ -8,14 +8,22 @@ interface TermsConditionsData {
   last_updated: string;
 }
 
+const isDevelopment = import.meta.env.DEV;
+const frontendUrl = isDevelopment ? "http://localhost:5173" : "https://wp-1099.com";
+const baseApiUrl = isDevelopment ? "/blogs/api/v2" : "https://esign-admin.signmary.com/blogs/api/v2";
+
 export function W9ChaserTermsConditions() {
   const [data, setData] = useState<TermsConditionsData | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(
-      "https://esign-admin.signmary.com/blogs/api/v2/terms-conditions-pages/?slug=w9-1099-chaser",
-    )
+    fetch(`${baseApiUrl}/terms-conditions-pages/?slug=w9-1099-chaser`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "X-Frontend-Url": frontendUrl,
+      },
+    })
       .then((res) => res.json())
       .then((result) => {
         setData(result.items?.[0] || null);

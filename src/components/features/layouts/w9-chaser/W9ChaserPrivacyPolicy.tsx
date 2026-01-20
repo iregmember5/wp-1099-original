@@ -8,14 +8,22 @@ interface PrivacyPolicyData {
   last_updated: string;
 }
 
+const isDevelopment = import.meta.env.DEV;
+const frontendUrl = isDevelopment ? "http://localhost:5173" : "https://wp-1099.com";
+const baseApiUrl = isDevelopment ? "/blogs/api/v2" : "https://esign-admin.signmary.com/blogs/api/v2";
+
 export function W9ChaserPrivacyPolicy() {
   const [data, setData] = useState<PrivacyPolicyData | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(
-      "https://esign-admin.signmary.com/blogs/api/v2/privacy-policy-pages/?slug=w9-1099-chaser",
-    )
+    fetch(`${baseApiUrl}/privacy-policy-pages/?slug=w9-1099-chaser`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "X-Frontend-Url": frontendUrl,
+      },
+    })
       .then((res) => res.json())
       .then((result) => {
         setData(result.items?.[0] || null);
