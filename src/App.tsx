@@ -24,6 +24,16 @@ const TeamPage = lazy(() => import("./components/teams/TeamPage"));
 const InformationPage = lazy(
   () => import("./components/information-page/InformationPage"),
 );
+const W9ChaserPrivacyPolicy = lazy(() =>
+  import("./components/features/layouts/w9-chaser/W9ChaserPrivacyPolicy").then((m) => ({
+    default: m.W9ChaserPrivacyPolicy,
+  })),
+);
+const W9ChaserTermsConditions = lazy(() =>
+  import("./components/features/layouts/w9-chaser/W9ChaserTermsConditions").then((m) => ({
+    default: m.W9ChaserTermsConditions,
+  })),
+);
 
 // Loading component
 const PageLoader = () => (
@@ -63,7 +73,9 @@ function AppContent() {
       | "gallery"
       | "affiliate"
       | "team"
-      | "demo-websites";
+      | "demo-websites"
+      | "privacy-policy"
+      | "terms-conditions";
     slug?: string;
   }>({ type: "features", slug: "wp-w9-1099-chaser" });
 
@@ -161,6 +173,16 @@ function AppContent() {
         return;
       }
 
+      if (path.includes("/w9-1099-chaser/privacy-policy")) {
+        setCurrentView({ type: "privacy-policy" });
+        return;
+      }
+
+      if (path.includes("/w9-1099-chaser/terms")) {
+        setCurrentView({ type: "terms-conditions" });
+        return;
+      }
+
       if (path.includes("/features/") || hash.includes("#features/")) {
         const slugMatch =
           path.match(/\/features\/([^\/]+)/) ||
@@ -205,6 +227,8 @@ function AppContent() {
         {currentView.type === "demo-websites" && (
           <InformationPage slug="demo-websites" />
         )}
+        {currentView.type === "privacy-policy" && <W9ChaserPrivacyPolicy />}
+        {currentView.type === "terms-conditions" && <W9ChaserTermsConditions />}
         {currentView.type === "landing" && <LandingPage />}
       </ThemeProvider>
     </Suspense>
